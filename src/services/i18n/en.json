@@ -1,0 +1,51 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "save": "Save",
+    "cancel": "Cancel",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next"
+  },
+  "navigation": {
+    "home": "Home",
+    "applications": "Applications"
+  },
+  "products": {
+    "title": "Choose Your Mortgage",
+    "variable": "Variable Rate Mortgages",
+    "fixed": "Fixed Rate Mortgages",
+    "bestRate": "Best Rate",
+    "selectButton": "Select This Product",
+    "rate": "Rate",
+    "term": "Term",
+    "lender": "Lender",
+    "noProducts": "No products available"
+  },
+  "application": {
+    "title": "Contact Information",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "phone": "Phone",
+    "save": "Save Information",
+    "update": "Update Information",
+    "saved": "Information saved successfully",
+    "updated": "Information updated successfully",
+    "error": "Failed to save information"
+  },
+  "applications": {
+    "title": "My Applications",
+    "noApplications": "No applications found",
+    "created": "Created",
+    "product": "Product",
+    "viewDetails": "View Details"
+  },
+  "validation": {
+    "required": "This field is required",
+    "invalidEmail": "Please enter a valid email address",
+    "invalidPhone": "Please enter a valid phone number"
+  }
+}
+

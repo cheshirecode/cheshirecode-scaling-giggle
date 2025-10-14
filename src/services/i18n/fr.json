@@ -1,0 +1,51 @@
+{
+  "common": {
+    "loading": "Chargement...",
+    "error": "Une erreur s'est produite",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "close": "Fermer",
+    "back": "Retour",
+    "next": "Suivant"
+  },
+  "navigation": {
+    "home": "Accueil",
+    "applications": "Demandes"
+  },
+  "products": {
+    "title": "Choisissez votre hypothèque",
+    "variable": "Hypothèques à taux variable",
+    "fixed": "Hypothèques à taux fixe",
+    "bestRate": "Meilleur taux",
+    "selectButton": "Sélectionner ce produit",
+    "rate": "Taux",
+    "term": "Terme",
+    "lender": "Prêteur",
+    "noProducts": "Aucun produit disponible"
+  },
+  "application": {
+    "title": "Informations de contact",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "email": "Courriel",
+    "phone": "Téléphone",
+    "save": "Enregistrer les informations",
+    "update": "Mettre à jour les informations",
+    "saved": "Informations enregistrées avec succès",
+    "updated": "Informations mises à jour avec succès",
+    "error": "Échec de l'enregistrement des informations"
+  },
+  "applications": {
+    "title": "Mes demandes",
+    "noApplications": "Aucune demande trouvée",
+    "created": "Créé",
+    "product": "Produit",
+    "viewDetails": "Voir les détails"
+  },
+  "validation": {
+    "required": "Ce champ est requis",
+    "invalidEmail": "Veuillez entrer une adresse courriel valide",
+    "invalidPhone": "Veuillez entrer un numéro de téléphone valide"
+  }
+}
+
