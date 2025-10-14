@@ -14,7 +14,9 @@
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
     "preview": "vite preview",
-    "prepare": "lefthook install"
+    "prepare": "lefthook install",
+    "deploy": "vercel --prod",
+    "deploy:preview": "vercel"
   },
   "dependencies": {
     "i18next": "^25.6.0",
