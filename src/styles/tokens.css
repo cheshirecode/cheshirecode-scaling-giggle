@@ -6,24 +6,37 @@
 :root {
   color-scheme: light dark;
 
-  /* Colors - Light/Dark */
-  --color-bg: light-dark(#ffffff, #1a1a1a);
-  --color-bg-secondary: light-dark(#f5f5f5, #242424);
+  /* Colors - Text */
   --color-text: light-dark(#1a1a1a, #e5e5e5);
-  --color-text-secondary: light-dark(#666666, #a0a0a0);
+  --color-text-muted: light-dark(#666666, #a0a0a0);
+  --color-text-disabled: light-dark(#999999, #606060);
+  --color-text-inverse: light-dark(#ffffff, #1a1a1a);
+
+  /* Colors - Surfaces */
+  --color-surface: light-dark(#ffffff, #1e1e1e);
+  --color-surface-hover: light-dark(#f5f5f5, #2a2a2a);
+  --color-surface-active: light-dark(#e5e5e5, #343434);
+  --color-surface-disabled: light-dark(#f0f0f0, #2c2c2c);
+
+  /* Colors - Borders */
+  --color-border: light-dark(#e0e0e0, #404040);
+  --color-border-hover: light-dark(#c0c0c0, #606060);
 
   /* Primary Brand (Nesto) */
   --color-primary: light-dark(#0066cc, #3399ff);
-  --color-primary-hover: light-dark(#0052a3, #66b3ff);
+  --color-primary-dark: light-dark(#0052a3, #1a7fe0);
+  --color-primary-darker: light-dark(#003d7a, #0066cc);
+  --color-primary-alpha: light-dark(rgba(0, 102, 204, 0.1), rgba(51, 153, 255, 0.2));
 
   /* Semantic Colors */
   --color-success: light-dark(#28a745, #4caf50);
   --color-error: light-dark(#dc3545, #f44336);
+  --color-error-alpha: light-dark(rgba(220, 53, 69, 0.1), rgba(244, 67, 54, 0.2));
   --color-warning: light-dark(#ffc107, #ffb74d);
+  --color-info: light-dark(#17a2b8, #29b6f6);
 
-  /* Borders */
-  --color-border: light-dark(#e0e0e0, #404040);
-  --color-border-focus: light-dark(#0066cc, #3399ff);
+  /* Backdrop */
+  --color-backdrop: light-dark(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4));
 
   /* Shadows */
   --shadow-sm: light-dark(
@@ -39,23 +52,26 @@
     0 10px 15px rgba(0, 0, 0, 0.5)
   );
 
-  /* Spacing */
-  --space-xs: 0.25rem;
-  --space-sm: 0.5rem;
-  --space-md: 1rem;
-  --space-lg: 1.5rem;
-  --space-xl: 2rem;
-  --space-2xl: 3rem;
+  /* Spacing (consistent with component usage) */
+  --spacing-1: 0.25rem;   /* 4px */
+  --spacing-2: 0.5rem;    /* 8px */
+  --spacing-3: 0.75rem;   /* 12px */
+  --spacing-4: 1rem;      /* 16px */
+  --spacing-5: 1.25rem;   /* 20px */
+  --spacing-6: 1.5rem;    /* 24px */
+  --spacing-8: 2rem;      /* 32px */
+  --spacing-10: 2.5rem;   /* 40px */
+  --spacing-12: 3rem;     /* 48px */
 
   /* Typography */
-  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  --font-size-xs: 0.75rem;
-  --font-size-sm: 0.875rem;
-  --font-size-base: 1rem;
-  --font-size-lg: 1.125rem;
-  --font-size-xl: 1.25rem;
-  --font-size-2xl: 1.5rem;
-  --font-size-3xl: 2rem;
+  --font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --font-size-xs: 0.75rem;    /* 12px */
+  --font-size-sm: 0.875rem;   /* 14px */
+  --font-size-base: 1rem;     /* 16px */
+  --font-size-lg: 1.125rem;   /* 18px */
+  --font-size-xl: 1.25rem;    /* 20px */
+  --font-size-2xl: 1.5rem;    /* 24px */
+  --font-size-3xl: 2rem;      /* 32px */
 
   --font-weight-normal: 400;
   --font-weight-medium: 500;
@@ -63,14 +79,14 @@
   --font-weight-bold: 700;
 
   --line-height-tight: 1.25;
-  --line-height-normal: 1.5;
+  --line-height-base: 1.5;
   --line-height-relaxed: 1.75;
 
   /* Border Radius */
-  --radius-sm: 0.25rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
-  --radius-full: 9999px;
+  --border-radius-sm: 0.25rem;
+  --border-radius-md: 0.5rem;
+  --border-radius-lg: 0.75rem;
+  --border-radius-full: 9999px;
 
   /* Transitions */
   --transition-fast: 150ms ease-in-out;

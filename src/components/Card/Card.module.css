@@ -1,22 +1,37 @@
+/**
+ * Card Component Styles
+ * Uses CSS custom properties from tokens.css
+ */
+
 .card {
-  background-color: var(--color-bg);
+  display: block;
+  padding: var(--spacing-6);
+  background-color: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-lg);
+  border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-sm);
-  transition: box-shadow var(--transition-base);
+  transition:
+    box-shadow 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
 }
 
-.card.interactive {
+.interactive {
   cursor: pointer;
 }
 
-.card.interactive:hover {
+.interactive:hover {
+  border-color: var(--color-border-hover);
   box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
 }
 
-.card.interactive:focus-visible {
-  outline: 2px solid var(--color-border-focus);
+.interactive:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+.interactive:focus-visible {
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
-
