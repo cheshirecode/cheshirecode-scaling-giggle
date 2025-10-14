@@ -2,11 +2,16 @@
 
 ## 🚀 Live Demo
 
-**Deployed URL**: https://nesto-frontend-v2-qm0zjvkvd-dac4158s-projects.vercel.app
+**Production URL**: https://nesto-frontend-v2.vercel.app
 
 **Status**: ✅ Successfully deployed to Vercel  
-**Build Time**: 17s  
+**Build Time**: 13-17s  
 **Bundle Size**: 46.03 kB gzipped
+
+**Alternative URLs** (all point to the same deployment):
+
+- https://nesto-frontend-v2-dac4158s-projects.vercel.app
+- https://nesto-frontend-v2-3clpk5enn-dac4158s-projects.vercel.app (latest deployment)
 
 ---
 
