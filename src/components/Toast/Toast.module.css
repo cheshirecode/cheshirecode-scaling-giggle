@@ -1,0 +1,125 @@
+.toastContainer {
+  position: fixed;
+  bottom: var(--spacing-lg);
+  right: var(--spacing-lg);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  max-width: 400px;
+  pointer-events: none;
+}
+
+.toast {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  pointer-events: auto;
+  animation: slideIn 0.3s ease-out;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+.toast.success {
+  background: light-dark(#f0fdf4, #14532d);
+  border-color: light-dark(#86efac, #16a34a);
+  color: light-dark(#166534, #bbf7d0);
+}
+
+.toast.error {
+  background: light-dark(#fef2f2, #7f1d1d);
+  border-color: light-dark(#fca5a5, #dc2626);
+  color: light-dark(#991b1b, #fecaca);
+}
+
+.toast.warning {
+  background: light-dark(#fffbeb, #78350f);
+  border-color: light-dark(#fcd34d, #f59e0b);
+  color: light-dark(#92400e, #fde68a);
+}
+
+.toast.info {
+  background: light-dark(#eff6ff, #1e3a8a);
+  border-color: light-dark(#93c5fd, #3b82f6);
+  color: light-dark(#1e40af, #bfdbfe);
+}
+
+.icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.title {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.message {
+  font-size: 13px;
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+.closeButton {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+  color: inherit;
+  font-size: 18px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeButton:hover {
+  opacity: 1;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive: Stack on mobile */
+@media (max-width: 640px) {
+  .toastContainer {
+    left: var(--spacing-md);
+    right: var(--spacing-md);
+    bottom: var(--spacing-md);
+    max-width: none;
+  }
+
+  .toast {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+}
