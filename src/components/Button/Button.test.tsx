@@ -9,7 +9,7 @@
  * @see https://github.com/jsdom/jsdom/issues/3363
  */
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { Button } from './Button';
 
 describe('Button', () => {

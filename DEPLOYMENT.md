@@ -169,6 +169,6 @@ To enable automatic deployments in the future:
 
 ---
 
-**Last Updated**: October 14, 2025  
-**Current Version**: 1.0.0  
+**Last Updated**: October 14, 2025
+**Current Version**: 1.0.0
 **Deployment Type**: Manual via CLI

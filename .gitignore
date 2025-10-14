@@ -194,3 +194,6 @@ ios/prebuild.log
 # Execution plan (working document)
 docs/execution-plan-staff-pe.md
 .vercel
+
+*storybook.log
+storybook-static

@@ -5,6 +5,7 @@ export type ToastType = 'success' | 'error' | 'info' | 'warning';
 export interface Toast {
   id: string;
   type: ToastType;
+  title?: string;
   message: string;
   duration?: number;
 }
@@ -38,4 +39,3 @@ export const toastsAtom = atom<Toast[]>([]);
 export function generateToastId(): string {
   return `toast-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 }
-
