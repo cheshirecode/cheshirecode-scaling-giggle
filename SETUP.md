@@ -1,5 +1,11 @@
 # Developer Setup Guide
 
+## 🚀 Live Demo
+
+**Deployed URL**: _[To be deployed - follow deployment instructions below]_
+
+---
+
 ## Quick Start
 
 ```bash
