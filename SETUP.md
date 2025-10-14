@@ -27,15 +27,32 @@ npm run lint
 npm run format
 ```
 
+## Your First Tasks
+
+Before implementing features, verify your setup:
+
+- [ ] Copy `.env.example` to `.env.local` and add your name
+- [ ] Run `npm install` - should complete without errors
+- [ ] Run `npm run dev` - app should load on http://localhost:5173
+- [ ] Run `npm test` - utility tests should pass
+- [ ] Check `src/App.tsx` - see the default Vite + React page
+- [ ] Read this guide: Common Patterns, Testing Strategy
+- [ ] Review `docs/execution-plan-staff-pe.md` for implementation phases
+
 ## Environment Variables
 
-Create `.env.local` in the root directory:
+Create `.env.local` in the root directory (copy from `.env.example`):
 
 ```env
-VITE_CANDIDATE_NAME=Your Name Here
+VITE_CANDIDATE_NAME=Your Full Name
 ```
 
-This is used in the `X-Nesto-Candidat` API header required by the Nesto API.
+**How it works:**
+
+- Vite exposes `VITE_*` prefixed variables to your app via `import.meta.env`
+- Used in `src/services/api.ts` for the `X-Nesto-Candidat` API header
+- Falls back to `"Dac Anh Tran"` if not set (for testing)
+- **Never commit `.env.local`** - it's in `.gitignore`
 
 ## Project Structure
 
@@ -54,6 +71,7 @@ src/
 ```
 
 **Key principles**:
+
 - `/components` = shared, no business logic
 - `/features` = domain-specific with business logic
 - `/utils` = pure functions (no side effects)
@@ -206,24 +224,28 @@ function Welcome() {
 ## Architectural Decisions
 
 ### Why Jotai instead of Redux?
+
 - Minimal global state needed (only toasts + theme)
 - Atomic updates (no need for reducers)
 - Better TypeScript inference
 - Smaller bundle size (2.9KB vs 40KB for Redux)
 
 ### Why SWR instead of React Query?
+
 - Simpler API for basic CRUD
 - Built-in cache and revalidation
 - Smaller bundle (4KB vs 13KB)
 - Perfect for this scale (3 screens, simple CRUD)
 
 ### Why wouter instead of react-router-dom?
+
 - Only 3 routes needed (/, /applications, /applications/:id)
 - 1.2KB vs 10KB bundle size (8x smaller)
 - Hooks-based API is sufficient
 - No need for data loaders or nested routes
 
 ### Why CSS Modules instead of Tailwind/CSS-in-JS?
+
 - **Project requirement**: No CSS frameworks allowed
 - Manual styling with CSS custom properties (design tokens)
 - Modern CSS features: `light-dark()` for theming
@@ -231,6 +253,7 @@ function Welcome() {
 - Better for learning CSS fundamentals
 
 ### Why native fetch instead of axios?
+
 - Modern browsers support fetch natively
 - Built-in TypeScript types
 - Smaller bundle (0KB vs 13KB)
@@ -299,13 +322,76 @@ test('no accessibility violations', async () => {
 });
 ```
 
+## Quick Visual Check
+
+After running `npm run dev`, you can test components by temporarily modifying `src/App.tsx`:
+
+```typescript
+import { Button } from './components/Button/Button';
+import { Input } from './components/Input/Input';
+import { Card } from './components/Card/Card';
+import { Spinner } from './components/Spinner/Spinner';
+
+function App() {
+  return (
+    <div style={{ padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      <h1>Component Preview</h1>
+
+      <section>
+        <h2>Buttons</h2>
+        <div style={{ display: 'flex', gap: '0.5rem' }}>
+          <Button variant="primary">Primary</Button>
+          <Button variant="secondary">Secondary</Button>
+          <Button variant="ghost">Ghost</Button>
+          <Button loading>Loading</Button>
+        </div>
+      </section>
+
+      <section>
+        <h2>Inputs</h2>
+        <Input label="First Name" placeholder="Enter your name" required />
+        <Input label="Email" error="Invalid email address" value="test@" />
+        <Input label="Phone" helperText="Format: (123) 456-7890" />
+      </section>
+
+      <Card>
+        <h3>Card Content</h3>
+        <p>This is a card component with padding and shadow.</p>
+      </Card>
+
+      <Card interactive>
+        <h3>Interactive Card</h3>
+        <p>Hover over me to see the interaction effect!</p>
+      </Card>
+
+      <section>
+        <h2>Spinners</h2>
+        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+          <Spinner size="small" />
+          <Spinner size="medium" />
+          <Spinner size="large" />
+        </div>
+      </section>
+    </div>
+  );
+}
+
+export default App;
+```
+
+**Remember to revert `App.tsx` after testing!** Or use Storybook once it's set up (TODO #8).
+
 ## Known Issues
 
 ### JSDOM Component Tests
-- **Issue**: JSDOM has compatibility issues with the current Node.js version
-- **Status**: Component tests are skipped for now (see `Button.test.tsx`)
+
+- **Issue**: JSDOM has compatibility issues with Node.js v20.3.0
+- **Error**: `Cannot read properties of undefined (reading 'DONT_CONTEXTIFY')`
+- **Status**: Component tests run but may fail with JSDOM errors (see `Button.test.tsx`)
 - **Workaround**: Focus on utility and API tests first
-- **Resolution**: Will be fixed when Node.js compatibility improves or when using Node 20 LTS
+- **Recommended Node version**: 20.9.0 or higher (or use Node 22 LTS)
+- **Current Node version check**: Run `node --version` to see your version
+- **Resolution**: Upgrade Node.js to v20.9.0+ or v22.x LTS
 
 ## Commit Convention
 
@@ -324,6 +410,7 @@ perf: performance improvements
 ```
 
 Examples:
+
 ```bash
 git commit -m "feat(products): add product listing page"
 git commit -m "test(api): add fetcher error handling tests"
@@ -338,4 +425,3 @@ git commit -m "a11y(button): add aria-busy for loading state"
 - [Vitest Documentation](https://vitest.dev/)
 - [Testing Library](https://testing-library.com/)
 - [MDN CSS light-dark()](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/light-dark)
-

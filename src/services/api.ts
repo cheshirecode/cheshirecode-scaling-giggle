@@ -23,13 +23,14 @@
 import { ApiError } from '../types/errors';
 
 const API_BASE_URL = 'https://nesto-fe-exam.vercel.app/api';
-const CANDIDATE_NAME = 'Dac Anh Tran'; // TODO: Replace with actual candidate name
+const CANDIDATE_NAME =
+  (import.meta.env.VITE_CANDIDATE_NAME as string | undefined) ?? 'Dac Anh Tran';
 
 const DEFAULT_HEADERS = {
   Accept: 'application/json',
   'Content-Type': 'application/json',
   'X-Nesto-Candidat': CANDIDATE_NAME,
-};
+} as const;
 
 /**
  * Generic fetcher for SWR
@@ -108,4 +109,3 @@ export async function del<T>(url: string): Promise<T> {
     method: 'DELETE',
   });
 }
-
