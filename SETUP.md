@@ -2,18 +2,28 @@
 
 ## 🚀 Live Demo
 
-**Production URL**: https://nesto-frontend-v2.vercel.app
+### Main Application
+
+**Production URL**: https://cheshirecode-challenge-nesto-frontend-app-dac4158s-projects.vercel.app
 
 **Status**: ✅ Successfully deployed to Vercel
-**Build Time**: 3-5 seconds
+**Build Time**: ~14 seconds
 **Bundle Size**: 45.40 kB gzipped (React: 141.72 KB raw)
+
+### Storybook Documentation
+
+**Production URL**: https://cheshirecode-challenge-nesto-frontend-sb-dac4158s-projects.vercel.app
+
+**Status**: ✅ Deployed as separate project
+**Build Time**: ~4 seconds
+**Bundle Size**: ~1.8 MB (static docs)
 
 **📖 Full Deployment Guide**: See [DEPLOYMENT.md](./DEPLOYMENT.md) for:
 
 - Manual deployment workflow (commit → push → deploy)
+- Separate deployment process for Storybook
 - Environment variable management
 - Troubleshooting tips
-- Future auto-deployment options
 
 ---
 

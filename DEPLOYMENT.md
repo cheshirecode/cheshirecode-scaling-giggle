@@ -1,10 +1,18 @@
 # Deployment Guide
 
-## 🚀 Production URL
+## 🚀 Production URLs
 
-**Primary URL**: https://nesto-frontend-v2.vercel.app
+### Main Application
 
-This URL automatically points to the latest production deployment.
+**Project**: cheshirecode-challenge-nesto-frontend-app  
+**Primary URL**: https://cheshirecode-challenge-nesto-frontend-app-dac4158s-projects.vercel.app
+
+### Storybook Documentation
+
+**Project**: cheshirecode-challenge-nesto-frontend-sb  
+**Primary URL**: https://cheshirecode-challenge-nesto-frontend-sb-dac4158s-projects.vercel.app
+
+Both URLs automatically point to the latest production deployments.
 
 ---
 
