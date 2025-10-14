@@ -4,8 +4,8 @@
 
 **Production URL**: https://nesto-frontend-v2.vercel.app
 
-**Status**: ✅ Successfully deployed to Vercel  
-**Build Time**: 13-17s  
+**Status**: ✅ Successfully deployed to Vercel
+**Build Time**: 13-17s
 **Bundle Size**: 46.03 kB gzipped
 
 **Alternative URLs** (all point to the same deployment):
