@@ -51,7 +51,7 @@ VITE_CANDIDATE_NAME=Your Full Name
 
 - Vite exposes `VITE_*` prefixed variables to your app via `import.meta.env`
 - Used in `src/services/api.ts` for the `X-Nesto-Candidat` API header
-- Falls back to `"Dac Anh Tran"` if not set (for testing)
+- **Required**: The app will not work without this variable set
 - **Never commit `.env.local`** - it's in `.gitignore`
 
 ## Project Structure
@@ -381,17 +381,15 @@ export default App;
 
 **Remember to revert `App.tsx` after testing!** Or use Storybook once it's set up (TODO #8).
 
-## Known Issues
+## Testing Environment
 
-### JSDOM Component Tests
+### happy-dom (Faster than JSDOM)
 
-- **Issue**: JSDOM has compatibility issues with Node.js v20.3.0
-- **Error**: `Cannot read properties of undefined (reading 'DONT_CONTEXTIFY')`
-- **Status**: Component tests run but may fail with JSDOM errors (see `Button.test.tsx`)
-- **Workaround**: Focus on utility and API tests first
-- **Recommended Node version**: 20.9.0 or higher (or use Node 22 LTS)
-- **Current Node version check**: Run `node --version` to see your version
-- **Resolution**: Upgrade Node.js to v20.9.0+ or v22.x LTS
+- **What**: Lightweight DOM implementation for testing
+- **Why**: 2-3x faster than JSDOM, better Node.js compatibility
+- **Status**: ✅ Works with Node.js v20.3.0+ (no DONT_CONTEXTIFY errors)
+- **Coverage**: Run `npm run test:coverage` to see test coverage
+- **Note**: If you see any DOM-related test failures, they're usually related to missing browser APIs (check happy-dom docs)
 
 ## Commit Convention
 

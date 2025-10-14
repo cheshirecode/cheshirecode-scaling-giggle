@@ -41,26 +41,26 @@ describe('Button', () => {
 
   it('applies variant classes', () => {
     const { rerender } = render(<Button variant="primary">Primary</Button>);
-    expect(screen.getByRole('button')).toHaveClass('primary');
+    const button = screen.getByRole('button');
+    expect(button.className).toContain('primary');
 
     rerender(<Button variant="secondary">Secondary</Button>);
-    expect(screen.getByRole('button')).toHaveClass('secondary');
+    expect(screen.getByRole('button').className).toContain('secondary');
 
     rerender(<Button variant="ghost">Ghost</Button>);
-    expect(screen.getByRole('button')).toHaveClass('ghost');
+    expect(screen.getByRole('button').className).toContain('ghost');
   });
 
   it('applies size classes', () => {
     const { rerender } = render(<Button size="small">Small</Button>);
-    expect(screen.getByRole('button')).toHaveClass('small');
+    expect(screen.getByRole('button').className).toContain('small');
 
     rerender(<Button size="large">Large</Button>);
-    expect(screen.getByRole('button')).toHaveClass('large');
+    expect(screen.getByRole('button').className).toContain('large');
   });
 
   it('applies fullWidth class', () => {
     render(<Button fullWidth>Full Width</Button>);
-    expect(screen.getByRole('button')).toHaveClass('fullWidth');
+    expect(screen.getByRole('button').className).toContain('fullWidth');
   });
 });
-

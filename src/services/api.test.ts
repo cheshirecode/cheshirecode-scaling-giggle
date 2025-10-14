@@ -28,7 +28,7 @@ describe('API Client', () => {
           headers: expect.objectContaining({
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            'X-Nesto-Candidat': 'Dac Anh Tran',
+            'X-Nesto-Candidat': expect.any(String) as string,
           }) as Record<string, string>,
         })
       );
@@ -53,9 +53,7 @@ describe('API Client', () => {
     });
 
     it('handles network errors', async () => {
-      (global.fetch as ReturnType<typeof vi.fn>).mockRejectedValueOnce(
-        new Error('Network error')
-      );
+      (global.fetch as ReturnType<typeof vi.fn>).mockRejectedValueOnce(new Error('Network error'));
 
       try {
         await fetcher('/test');
@@ -75,10 +73,7 @@ describe('API Client', () => {
 
       await fetcher('https://example.com/api/test');
 
-      expect(global.fetch).toHaveBeenCalledWith(
-        'https://example.com/api/test',
-        expect.any(Object)
-      );
+      expect(global.fetch).toHaveBeenCalledWith('https://example.com/api/test', expect.any(Object));
     });
   });
 
@@ -128,4 +123,3 @@ describe('API Client', () => {
     });
   });
 });
-

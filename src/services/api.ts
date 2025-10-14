@@ -23,8 +23,7 @@
 import { ApiError } from '../types/errors';
 
 const API_BASE_URL = 'https://nesto-fe-exam.vercel.app/api';
-const CANDIDATE_NAME =
-  (import.meta.env.VITE_CANDIDATE_NAME as string | undefined) ?? 'Dac Anh Tran';
+const CANDIDATE_NAME = import.meta.env.VITE_CANDIDATE_NAME as string;
 
 const DEFAULT_HEADERS = {
   Accept: 'application/json',
