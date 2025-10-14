@@ -4,12 +4,12 @@
 
 ### Main Application
 
-**Project**: cheshirecode-challenge-nesto-frontend-app  
+**Project**: cheshirecode-challenge-nesto-frontend-app
 **Primary URL**: https://cheshirecode-challenge-nesto-frontend-app-dac4158s-projects.vercel.app
 
 ### Storybook Documentation
 
-**Project**: cheshirecode-challenge-nesto-frontend-sb  
+**Project**: cheshirecode-challenge-nesto-frontend-sb
 **Primary URL**: https://cheshirecode-challenge-nesto-frontend-sb-dac4158s-projects.vercel.app
 
 Both URLs automatically point to the latest production deployments.
