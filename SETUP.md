@@ -4,14 +4,16 @@
 
 **Production URL**: https://nesto-frontend-v2.vercel.app
 
-**Status**: ✅ Successfully deployed to Vercel
-**Build Time**: 13-17s
-**Bundle Size**: 46.03 kB gzipped
+**Status**: ✅ Successfully deployed to Vercel  
+**Build Time**: 3-5 seconds  
+**Bundle Size**: 45.40 kB gzipped (React: 141.72 KB raw)
 
-**Alternative URLs** (all point to the same deployment):
+**📖 Full Deployment Guide**: See [DEPLOYMENT.md](./DEPLOYMENT.md) for:
 
-- https://nesto-frontend-v2-dac4158s-projects.vercel.app
-- https://nesto-frontend-v2-3clpk5enn-dac4158s-projects.vercel.app (latest deployment)
+- Manual deployment workflow (commit → push → deploy)
+- Environment variable management
+- Troubleshooting tips
+- Future auto-deployment options
 
 ---
 
