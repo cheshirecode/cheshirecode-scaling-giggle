@@ -3,6 +3,9 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "engines": {
+    "node": ">=20.3.0"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -14,7 +17,7 @@
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
     "preview": "vite preview",
-    "prepare": "lefthook install",
+    "prepare": "git rev-parse --git-dir > /dev/null 2>&1 && lefthook install || echo 'Skipping lefthook (not a git repo)'",
     "deploy": "vercel --prod",
     "deploy:preview": "vercel"
   },

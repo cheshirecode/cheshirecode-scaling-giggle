@@ -1,0 +1,11 @@
+# Vercel ignore file
+node_modules
+.git
+.env.local
+.DS_Store
+*.log
+coverage
+.vscode
+.cursor
+docs/execution-plan-staff-pe.md
+

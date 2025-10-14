@@ -4,8 +4,5 @@
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "framework": "vite",
-  "outputDirectory": "dist",
-  "env": {
-    "VITE_CANDIDATE_NAME": "@vite-candidate-name"
-  }
+  "outputDirectory": "dist"
 }
