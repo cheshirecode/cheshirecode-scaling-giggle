@@ -417,6 +417,116 @@ git commit -m "test(api): add fetcher error handling tests"
 git commit -m "a11y(button): add aria-busy for loading state"
 ```
 
+## Deployment (Vercel)
+
+### Prerequisites
+
+- Vercel account (free tier works)
+- GitHub repository (or GitLab/Bitbucket)
+
+### Option 1: Via Vercel Dashboard (Recommended for First Deploy)
+
+1. **Push to GitHub**:
+
+   ```bash
+   git push origin master
+   ```
+
+2. **Import to Vercel**:
+   - Go to [vercel.com/new](https://vercel.com/new)
+   - Click "Import Project"
+   - Select your repository
+   - Vercel will auto-detect Vite framework
+
+3. **Configure Environment Variables**:
+   - In the "Environment Variables" section:
+     - Key: `VITE_CANDIDATE_NAME`
+     - Value: Your full name
+   - Click "Add"
+
+4. **Deploy**:
+   - Click "Deploy"
+   - Wait ~1-2 minutes for build to complete
+   - Your app will be live at `https://your-project.vercel.app`
+
+### Option 2: Via Vercel CLI
+
+1. **Install Vercel CLI**:
+
+   ```bash
+   npm install -g vercel
+   ```
+
+2. **Login**:
+
+   ```bash
+   vercel login
+   ```
+
+3. **Deploy**:
+
+   ```bash
+   vercel
+   ```
+
+4. **Set Environment Variables**:
+
+   ```bash
+   vercel env add VITE_CANDIDATE_NAME
+   # Enter your full name when prompted
+   ```
+
+5. **Production Deploy**:
+   ```bash
+   vercel --prod
+   ```
+
+### Automatic Deployments
+
+Once connected to GitHub:
+
+- **Every push to `master`** → Production deployment
+- **Every push to other branches** → Preview deployment
+- **Pull requests** → Preview deployment with unique URL
+
+### Build Configuration
+
+The `vercel.json` file configures:
+
+- Build command: `npm run build`
+- Output directory: `dist`
+- Framework: Vite
+- Environment variables
+
+### Deployment Checklist
+
+- [ ] Repository pushed to GitHub/GitLab/Bitbucket
+- [ ] Vercel project created and linked
+- [ ] `VITE_CANDIDATE_NAME` environment variable set
+- [ ] Build succeeds (check deployment logs)
+- [ ] App loads correctly at deployment URL
+- [ ] API calls work (check Network tab)
+- [ ] Theming works (toggle light/dark mode)
+
+### Troubleshooting
+
+**Build fails:**
+
+- Check deployment logs in Vercel dashboard
+- Verify all dependencies are in `package.json`
+- Run `npm run build` locally to test
+
+**Environment variables not working:**
+
+- Must be prefixed with `VITE_`
+- Must be set in Vercel dashboard
+- Redeploy after adding new variables
+
+**404 errors on routes:**
+
+- Vercel auto-handles SPA routing for Vite
+- If issues persist, add `vercel.json` with `rewrites` config
+
 ## Resources
 
 - [SWR Documentation](https://swr.vercel.app/)
@@ -425,3 +535,5 @@ git commit -m "a11y(button): add aria-busy for loading state"
 - [Vitest Documentation](https://vitest.dev/)
 - [Testing Library](https://testing-library.com/)
 - [MDN CSS light-dark()](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/light-dark)
+- [Vercel Documentation](https://vercel.com/docs)
+- [Vite Deployment Guide](https://vitejs.dev/guide/static-deploy.html)
