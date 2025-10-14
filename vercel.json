@@ -1,14 +1,8 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "./scripts/build-with-storybook.sh",
+  "buildCommand": "./scripts/build.sh",
   "devCommand": "npm run dev",
   "installCommand": "npm install --legacy-peer-deps",
   "framework": "vite",
-  "outputDirectory": "dist",
-  "rewrites": [
-    {
-      "source": "/_storybook/:path*",
-      "destination": "/_storybook/:path*"
-    }
-  ]
+  "outputDirectory": "dist"
 }
