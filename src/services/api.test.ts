@@ -16,7 +16,7 @@ describe('API Client', () => {
       const mockData = { id: 1, name: 'Test' };
       (global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
         ok: true,
-        json: async () => mockData,
+        json: async () => Promise.resolve(mockData),
       });
 
       const result = await fetcher<typeof mockData>('/test');
@@ -29,7 +29,7 @@ describe('API Client', () => {
             Accept: 'application/json',
             'Content-Type': 'application/json',
             'X-Nesto-Candidat': 'Dac Anh Tran',
-          }),
+          }) as Record<string, string>,
         })
       );
     });
@@ -70,7 +70,7 @@ describe('API Client', () => {
       const mockData = { test: true };
       (global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
         ok: true,
-        json: async () => mockData,
+        json: async () => Promise.resolve(mockData),
       });
 
       await fetcher('https://example.com/api/test');
@@ -89,7 +89,7 @@ describe('API Client', () => {
 
       (global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
         ok: true,
-        json: async () => mockData,
+        json: async () => Promise.resolve(mockData),
       });
 
       const result = await post('/test', body);
@@ -112,7 +112,7 @@ describe('API Client', () => {
 
       (global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
         ok: true,
-        json: async () => mockData,
+        json: async () => Promise.resolve(mockData),
       });
 
       const result = await put('/test/1', body);

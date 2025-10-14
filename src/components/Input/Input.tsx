@@ -1,6 +1,30 @@
 import { InputHTMLAttributes } from 'react';
 import styles from './Input.module.css';
 
+/**
+ * Input component with label, validation, and accessibility
+ *
+ * @example
+ * // Basic input with label
+ * <Input label="Email" type="email" required />
+ *
+ * @example
+ * // With error state
+ * <Input
+ *   label="First Name"
+ *   value={firstName}
+ *   onChange={(e) => setFirstName(e.target.value)}
+ *   error={errors.firstName}
+ * />
+ *
+ * @example
+ * // With helper text
+ * <Input
+ *   label="Phone"
+ *   type="tel"
+ *   helperText="Format: (123) 456-7890"
+ * />
+ */
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
@@ -16,7 +40,7 @@ export function Input({
   className,
   ...props
 }: InputProps): JSX.Element {
-  const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`;
+  const inputId = id ?? `input-${Math.random().toString(36).substr(2, 9)}`;
   const hasError = Boolean(error);
 
   return (
@@ -29,7 +53,7 @@ export function Input({
       )}
       <input
         id={inputId}
-        className={`${styles.input} ${hasError ? styles.error : ''} ${className || ''}`}
+        className={`${styles.input} ${hasError ? styles.error : ''} ${className ?? ''}`}
         aria-invalid={hasError}
         aria-describedby={
           error ? `${inputId}-error` : helperText ? `${inputId}-helper` : undefined

@@ -23,7 +23,7 @@ export type RestrictionsOption =
 export type HelocOption = 'HELOC_WITH' | 'HELOC_WITHOUT';
 export type RateHold = '30_DAYS' | '45_DAYS' | '60_DAYS' | '90_DAYS' | '120_DAYS';
 
-export type Product = {
+export interface Product {
   readonly id: number;
   name: string;
   family: ProductFamily;
@@ -45,29 +45,29 @@ export type Product = {
   bestRate: number;
   readonly created: string;
   readonly updated: string;
-};
+}
 
-export type Applicant = {
+export interface Applicant {
   phone: string;
   email: string;
   firstName: string;
   lastName: string;
-};
+}
 
 export type ApplicationType = 'NEW' | 'RENEWAL' | 'REFINANCE';
 
-export type Application = {
+export interface Application {
   readonly id: string;
   token: string;
   type: ApplicationType;
   applicants: Applicant[];
   productId?: number;
   readonly createdAt: string;
-};
+}
 
-export type CreateApplication = {
+export interface CreateApplication {
   productId: number;
-};
+}
 
 /**
  * Grouped products by type for UI display

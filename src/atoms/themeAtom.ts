@@ -5,6 +5,22 @@ export type Theme = 'light' | 'dark' | 'system';
 /**
  * Theme atom with localStorage persistence
  * Default: 'system' (follows prefers-color-scheme)
+ *
+ * @example
+ * import { useAtom } from 'jotai';
+ * import { themeAtom, applyTheme } from '@/atoms/themeAtom';
+ *
+ * function ThemeToggle() {
+ *   const [theme, setTheme] = useAtom(themeAtom);
+ *
+ *   const toggleTheme = () => {
+ *     const newTheme = theme === 'light' ? 'dark' : 'light';
+ *     setTheme(newTheme);
+ *     applyTheme(newTheme); // Apply to DOM
+ *   };
+ *
+ *   return <button onClick={toggleTheme}>Toggle</button>;
+ * }
  */
 export const themeAtom = atomWithStorage<Theme>('theme', 'system');
 

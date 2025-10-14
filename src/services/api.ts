@@ -1,6 +1,23 @@
 /**
  * API Client for Nesto Frontend Challenge
  * Base fetcher for SWR with error handling
+ *
+ * Architecture:
+ * - Used with SWR: useSWR('/products', fetcher)
+ * - Automatic retries and caching handled by SWR
+ * - Custom headers (X-Nesto-Candidat) added automatically
+ * - 25s timeout on all requests
+ * - Errors wrapped in ApiError class
+ *
+ * @example
+ * // GET request with SWR
+ * const { data, error } = useSWR<Product[]>('/products', fetcher);
+ *
+ * @example
+ * // POST request
+ * const result = await post<Application>('/applications', { productId: 123 });
+ *
+ * @see types/errors.ts for ApiError definition
  */
 
 import { ApiError } from '../types/errors';
@@ -33,7 +50,7 @@ export async function fetcher<T>(url: string, init?: RequestInit): Promise<T> {
       signal: controller.signal,
       headers: {
         ...DEFAULT_HEADERS,
-        ...(init?.headers || {}),
+        ...(init?.headers ?? {}),
       },
     });
 

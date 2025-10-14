@@ -1,6 +1,23 @@
 import { ButtonHTMLAttributes } from 'react';
 import styles from './Button.module.css';
 
+/**
+ * Button component with variants, sizes, and loading states
+ *
+ * @example
+ * // Primary button
+ * <Button variant="primary" onClick={handleClick}>Save</Button>
+ *
+ * @example
+ * // Loading state
+ * <Button loading={isMutating} disabled={isMutating}>
+ *   {isMutating ? 'Saving...' : 'Save'}
+ * </Button>
+ *
+ * @example
+ * // Full width button
+ * <Button variant="secondary" fullWidth>Cancel</Button>
+ */
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'ghost';
   size?: 'small' | 'medium' | 'large';
@@ -33,7 +50,7 @@ export function Button({
   return (
     <button
       className={classes}
-      disabled={disabled || loading}
+      disabled={disabled ?? loading}
       aria-busy={loading}
       {...props}
     >

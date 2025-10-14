@@ -1,3 +1,13 @@
+/**
+ * Component tests for Button
+ *
+ * NOTE: If these tests fail with JSDOM errors like:
+ * "Cannot read properties of undefined (reading 'DONT_CONTEXTIFY')"
+ * This is due to Node.js version incompatibility with JSDOM.
+ * Resolution: Use Node 20 LTS or wait for JSDOM compatibility updates.
+ *
+ * @see https://github.com/jsdom/jsdom/issues/3363
+ */
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { Button } from './Button';
