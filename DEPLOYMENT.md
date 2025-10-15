@@ -5,14 +5,14 @@
 ### Main Application
 
 **Project**: cheshirecode-challenge-nesto-frontend-app
-**Primary URL**: https://cheshirecode-challenge-nesto-frontend-app-dac4158s-projects.vercel.app
+**Latest URL**: https://cheshirecode-challenge-nesto-frontend-r45z7e7v9.vercel.app
 
 ### Storybook Documentation
 
-**Project**: cheshirecode-challenge-nesto-frontend-sb
-**Primary URL**: https://cheshirecode-challenge-nesto-frontend-sb-dac4158s-projects.vercel.app
+**Project**: storybook-static
+**Latest URL**: https://storybook-static-hiqcyf92b-dac4158s-projects.vercel.app
 
-Both URLs automatically point to the latest production deployments.
+> **Note**: Deployment URLs change with each deploy (unique hash). Use Vercel dashboard to see deployment history.
 
 ---
 
@@ -37,7 +37,7 @@ git commit -m "feat: your change"
 git push origin master
 ```
 
-#### 3. Deploy to Vercel
+#### 3. Deploy App to Vercel
 
 ```bash
 npm run deploy
@@ -45,23 +45,43 @@ npm run deploy
 vercel --prod --yes
 ```
 
-#### Quick Deploy (All Steps)
+#### 4. Deploy Storybook to Vercel
 
 ```bash
-git push origin master && npm run deploy
+npm run build-storybook
+cd storybook-static
+vercel --prod --yes
+cd ..
+```
+
+#### Quick Deploy (All Steps - App + Storybook)
+
+```bash
+git push origin master && \
+vercel --prod --yes && \
+npm run build-storybook && \
+cd storybook-static && \
+vercel --prod --yes && \
+cd ..
 ```
 
 ---
 
 ## 🔄 Deployment Commands
 
-| Command                  | Description                       |
-| ------------------------ | --------------------------------- |
-| `npm run deploy`         | Deploy to production              |
-| `npm run deploy:preview` | Deploy to preview (staging)       |
-| `vercel --prod --yes`    | Deploy to production (direct CLI) |
-| `vercel ls --prod`       | List production deployments       |
-| `vercel alias ls`        | List all deployment aliases       |
+| Command                   | Description                      |
+| ------------------------- | -------------------------------- |
+| `npm run deploy`          | Deploy app to production         |
+| `npm run build-storybook` | Build Storybook static files     |
+| `vercel --prod --yes`     | Deploy current directory to prod |
+| `npm run deploy:preview`  | Deploy to preview (staging)      |
+| `vercel ls --prod`        | List production deployments      |
+| `vercel inspect <url>`    | View deployment details          |
+
+**Deployment Workflow (Both Targets)**:
+
+1. Deploy app: `vercel --prod --yes` (from project root)
+2. Deploy Storybook: `cd storybook-static && vercel --prod --yes && cd ..`
 
 ---
 
@@ -69,11 +89,19 @@ git push origin master && npm run deploy
 
 ### Production
 
-- **Primary**: https://nesto-frontend-v2.vercel.app (permanent)
-- **Project**: https://nesto-frontend-v2-dac4158s-projects.vercel.app (permanent)
-- **Deployment**: https://nesto-frontend-v2-{hash}-dac4158s-projects.vercel.app (per-deployment)
+#### Main Application
 
-All URLs point to the same deployment. The primary URL is the cleanest and most shareable.
+- **Latest**: https://cheshirecode-challenge-nesto-frontend-r45z7e7v9.vercel.app
+- **Pattern**: `https://cheshirecode-challenge-nesto-frontend-{hash}.vercel.app`
+- **Project**: cheshirecode-challenge-nesto-frontend-app
+
+#### Storybook
+
+- **Latest**: https://storybook-static-hiqcyf92b-dac4158s-projects.vercel.app
+- **Pattern**: `https://storybook-static-{hash}-dac4158s-projects.vercel.app`
+- **Project**: storybook-static
+
+Each deployment gets a unique hash. Both targets are deployed independently after each major change.
 
 ---
 
@@ -81,11 +109,12 @@ All URLs point to the same deployment. The primary URL is the cleanest and most 
 
 ### Latest Deployment
 
-- **Status**: ✅ Live
-- **Build Time**: ~3-5 seconds
-- **Bundle Size**: 141.72 KB (45.40 KB gzipped)
+- **Status**: ✅ Live (both App + Storybook)
+- **Build Time**: ~3-5 seconds (app), ~4 seconds (Storybook)
+- **Bundle Size**: 68.64 KB total (app with vendor chunks)
 - **Node Version**: >=20.3.0
 - **Framework**: Vite (auto-detected)
+- **Last Deploy**: October 15, 2025 @ 4:03 PM
 
 ### Environment Variables
 
@@ -131,18 +160,20 @@ Current environments:
 
 Before deploying:
 
-- [ ] All tests passing: `npm test`
+- [ ] All tests passing: `npm test -- --run`
 - [ ] Build successful: `npm run build`
 - [ ] Linting clean: `npm run lint`
 - [ ] Commits pushed: `git push origin master`
 - [ ] Environment variables configured
 
-After deploying:
+After deploying (both App + Storybook):
 
-- [ ] Production URL accessible
-- [ ] Page title correct
-- [ ] No console errors
+- [ ] App production URL accessible
+- [ ] Storybook production URL accessible
+- [ ] No console errors in either
 - [ ] Features working as expected
+- [ ] Theme toggle functional
+- [ ] i18n switching works
 
 ---
 
@@ -177,6 +208,22 @@ To enable automatic deployments in the future:
 
 ---
 
-**Last Updated**: October 14, 2025
+## 🔍 Recent Deployments
+
+### October 15, 2025 @ 4:03 PM
+
+- **Commit**: `099fd7e` - fix: remove @storybook/test from Story files
+- **App**: https://cheshirecode-challenge-nesto-frontend-r45z7e7v9.vercel.app
+- **Storybook**: https://storybook-static-hiqcyf92b-dac4158s-projects.vercel.app
+- **Changes**: Fixed production error (jotai dependency), removed @storybook/test
+
+### October 15, 2025 @ 3:56 PM
+
+- **Commit**: `ed71dc0` - feat: implement products page with SWR and parameterization
+- **Changes**: ProductsPage with best products, parameterization principle added
+
+---
+
+**Last Updated**: October 15, 2025
 **Current Version**: 1.0.0
-**Deployment Type**: Manual via CLI
+**Deployment Type**: Manual via CLI (both App + Storybook)
