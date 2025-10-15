@@ -1,36 +1,54 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
+import { Route, Switch } from 'wouter';
+import { ErrorBoundary } from '@/components/ErrorBoundary/ErrorBoundary';
+import { Navigation } from '@/components/Navigation/Navigation';
+import { useThemeInitializer } from '@/hooks/useThemeInitializer';
 import './App.css';
-import { useThemeInitializer } from './hooks/useThemeInitializer';
+
+// Placeholder pages (to be implemented)
+function ProductsPage(): JSX.Element {
+  return (
+    <div className="page">
+      <h1>Products</h1>
+      <p>Product listings will appear here.</p>
+    </div>
+  );
+}
+
+function ApplicationsPage(): JSX.Element {
+  return (
+    <div className="page">
+      <h1>My Applications</h1>
+      <p>Your mortgage applications will appear here.</p>
+    </div>
+  );
+}
+
+function NotFoundPage(): JSX.Element {
+  return (
+    <div className="page">
+      <h1>404 - Page Not Found</h1>
+      <p>The page you're looking for doesn't exist.</p>
+    </div>
+  );
+}
 
 function App(): JSX.Element {
-  const [count, setCount] = useState(0);
-
   // Initialize theme from localStorage
   useThemeInitializer();
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <ErrorBoundary>
+      <div className="app">
+        <Navigation />
+        <main className="main">
+          <Switch>
+            <Route path="/" component={ProductsPage} />
+            <Route path="/applications" component={ApplicationsPage} />
+            <Route component={NotFoundPage} />
+          </Switch>
+        </main>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button type="button" onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-    </>
+    </ErrorBoundary>
   );
 }
 
