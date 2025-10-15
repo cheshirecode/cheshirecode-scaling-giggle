@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
 import { Input } from './Input';
 
 const meta = {
@@ -37,8 +36,8 @@ const meta = {
     },
   },
   args: {
-    onChange: fn(),
-    onBlur: fn(),
+    onChange: () => console.log('Input changed'),
+    onBlur: () => console.log('Input blurred'),
   },
 } satisfies Meta<typeof Input>;
 

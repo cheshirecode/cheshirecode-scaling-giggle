@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
 import type { Product } from '@/types/api';
 import { ProductCard } from './ProductCard';
 
@@ -41,7 +40,7 @@ const meta = {
     },
   },
   args: {
-    onApply: fn(),
+    onApply: () => console.log('Apply clicked'),
   },
   decorators: [
     (Story) => (

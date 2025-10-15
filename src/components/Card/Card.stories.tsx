@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
 import { Card } from './Card';
 
 const meta = {
@@ -20,7 +19,7 @@ const meta = {
     },
   },
   args: {
-    onClick: fn(),
+    onClick: () => console.log('Card clicked'),
   },
 } satisfies Meta<typeof Card>;
 
