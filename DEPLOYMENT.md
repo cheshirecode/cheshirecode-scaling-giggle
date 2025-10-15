@@ -161,19 +161,31 @@ Current environments:
 Before deploying:
 
 - [ ] All tests passing: `npm test -- --run`
-- [ ] Build successful: `npm run build`
+- [ ] **Build validation passing**: `npm run validate` ✨ **REQUIRED**
+  - Checks for React duplication
+  - Verifies critical dependencies in bundle
+  - Validates bundle structure
 - [ ] Linting clean: `npm run lint`
 - [ ] Commits pushed: `git push origin master`
 - [ ] Environment variables configured
+
+**If validation fails:**
+
+1. Read error message carefully
+2. Apply suggested fix
+3. Run `npm run validate` again
+4. Retry up to 2 times
+5. If still failing, investigate deeper
 
 After deploying (both App + Storybook):
 
 - [ ] App production URL accessible
 - [ ] Storybook production URL accessible
-- [ ] No console errors in either
+- [ ] No console errors in either (check browser DevTools)
 - [ ] Features working as expected
 - [ ] Theme toggle functional
 - [ ] i18n switching works
+- [ ] Test production build locally first: `npm run preview`
 
 ---
 
