@@ -336,18 +336,22 @@ afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 ```
 
-### Accessibility Tests (with jest-axe)
+### Accessibility Tests
 
-```typescript
-import { render } from '@testing-library/react';
-import { axe, toHaveNoViolations } from 'jest-axe';
-expect.extend(toHaveNoViolations);
+**Manual Testing**: Use browser DevTools (Lighthouse, axe DevTools extension) for accessibility audits
 
-test('no accessibility violations', async () => {
-  const { container } = render(<Button>Click</Button>);
-  expect(await axe(container)).toHaveNoViolations();
-});
-```
+**Automated Tests** (via Storybook):
+
+- Storybook includes `@storybook/addon-a11y` for interactive accessibility testing
+- View components in Storybook and check the "Accessibility" tab
+- Tests keyboard navigation, ARIA attributes, color contrast
+
+**In Code**:
+
+- Use semantic HTML (`<button>`, `<nav>`, `<main>`)
+- Add ARIA labels where needed (`aria-label`, `aria-labelledby`)
+- Test keyboard navigation (`Tab`, `Enter`, `Space`)
+- Verify focus-visible styles
 
 ## Quick Visual Check
 
