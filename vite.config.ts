@@ -98,6 +98,9 @@ export default defineConfig({
     alias: {
       '@': resolve(__dirname, './src'),
     },
+    // Force single instance of React to prevent hook conflicts
+    // Fixes: "Cannot set properties of undefined (setting 'Children')"
+    dedupe: ['react', 'react-dom'],
   },
   build: {
     rollupOptions: {
