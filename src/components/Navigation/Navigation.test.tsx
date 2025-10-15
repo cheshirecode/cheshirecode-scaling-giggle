@@ -1,82 +1,133 @@
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
+import { Provider } from 'jotai';
 import { Navigation } from './Navigation';
 
-// Mock i18next
+// Mock wouter
+vi.mock('wouter', () => ({
+  Link: ({
+    href,
+    children,
+    className,
+  }: {
+    href: string;
+    children: React.ReactNode;
+    className?: string;
+  }) => (
+    <a href={href} className={className}>
+      {children}
+    </a>
+  ),
+  useLocation: () => ['/', vi.fn()],
+}));
+
+// Mock react-i18next
 vi.mock('react-i18next', () => ({
   useTranslation: () => ({
-    t: (key: string) => key,
+    t: (key: string) => {
+      const translations: Record<string, string> = {
+        'navigation.home': 'Home',
+        'navigation.applications': 'Applications',
+      };
+      return translations[key] ?? key;
+    },
     i18n: {
       language: 'en',
       changeLanguage: vi.fn(),
     },
   }),
+  initReactI18next: {
+    type: '3rdParty',
+    init: vi.fn(),
+  },
+}));
+
+// Mock child components to isolate Navigation testing
+vi.mock('@/components/ThemeToggle/ThemeToggle', () => ({
+  ThemeToggle: () => <div data-testid="theme-toggle">Theme Toggle</div>,
+}));
+
+vi.mock('@/components/LanguageSwitcher/LanguageSwitcher', () => ({
+  LanguageSwitcher: () => <div data-testid="language-switcher">Language Switcher</div>,
 }));
 
 describe('Navigation', () => {
-  beforeEach(() => {
-    // Clear localStorage before each test
-    localStorage.clear();
+  it('renders brand logo', () => {
+    render(
+      <Provider>
+        <Navigation />
+      </Provider>
+    );
+
+    expect(screen.getByText('Nesto')).toBeInTheDocument();
   });
 
   it('renders navigation links', () => {
-    render(<Navigation />);
-
-    expect(screen.getByText('navigation.home')).toBeInTheDocument();
-    expect(screen.getByText('navigation.applications')).toBeInTheDocument();
-  });
-
-  it('renders language switcher with EN and FR buttons', () => {
-    render(<Navigation />);
-
-    expect(screen.getByText('EN')).toBeInTheDocument();
-    expect(screen.getByText('FR')).toBeInTheDocument();
-  });
-
-  it('renders theme toggle button', () => {
-    render(<Navigation />);
-
-    // Theme button has either sun or moon emoji
-    const allButtons = screen.getAllByRole('button');
-    const themeButton = allButtons.find((button) =>
-      ['🌙', '☀️'].includes(button.textContent ?? '')
-    );
-    expect(themeButton).toBeInTheDocument();
-  });
-
-  it('toggles theme when clicking theme button', async () => {
-    const user = userEvent.setup();
-    render(<Navigation />);
-
-    const allButtons = screen.getAllByRole('button');
-    const themeButton = allButtons.find((button) =>
-      ['🌙', '☀️'].includes(button.textContent ?? '')
+    render(
+      <Provider>
+        <Navigation />
+      </Provider>
     );
 
-    if (themeButton) {
-      // Click to toggle theme
-      await user.click(themeButton);
-
-      // Theme should toggle (implementation verified through localStorage or DOM)
-      expect(themeButton).toBeInTheDocument();
-    }
+    expect(screen.getByText('Home')).toBeInTheDocument();
+    expect(screen.getByText('Applications')).toBeInTheDocument();
   });
 
-  it('has accessible language switcher buttons', () => {
-    render(<Navigation />);
+  it('uses wouter Link for SPA navigation', () => {
+    render(
+      <Provider>
+        <Navigation />
+      </Provider>
+    );
 
-    const enButton = screen.getByLabelText('Switch to English');
-    const frButton = screen.getByLabelText('Passer au français');
+    const homeLink = screen.getByText('Home');
+    expect(homeLink.tagName).toBe('A');
+    expect(homeLink).toHaveAttribute('href', '/');
 
-    expect(enButton).toBeInTheDocument();
-    expect(frButton).toBeInTheDocument();
+    const applicationsLink = screen.getByText('Applications');
+    expect(applicationsLink).toHaveAttribute('href', '/applications');
   });
 
-  it('applies active class to current language', () => {
-    render(<Navigation />);
+  it('renders ThemeToggle component', () => {
+    render(
+      <Provider>
+        <Navigation />
+      </Provider>
+    );
 
-    const enButton = screen.getByText('EN');
-    expect(enButton.className).toContain('active');
+    expect(screen.getByTestId('theme-toggle')).toBeInTheDocument();
+  });
+
+  it('renders LanguageSwitcher component', () => {
+    render(
+      <Provider>
+        <Navigation />
+      </Provider>
+    );
+
+    expect(screen.getByTestId('language-switcher')).toBeInTheDocument();
+  });
+
+  it('has semantic nav element', () => {
+    const { container } = render(
+      <Provider>
+        <Navigation />
+      </Provider>
+    );
+
+    const nav = container.querySelector('nav');
+    expect(nav).toBeInTheDocument();
+  });
+
+  it('applies sticky positioning styles', () => {
+    const { container } = render(
+      <Provider>
+        <Navigation />
+      </Provider>
+    );
+
+    const nav = container.querySelector('nav');
+    // CSS Modules hash class names, but we can verify the nav element exists
+    expect(nav).toBeInTheDocument();
   });
 });

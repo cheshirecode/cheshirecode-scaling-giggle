@@ -1,20 +1,20 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call */
-// Third-party library types (wouter, i18next) have known type issues that are safe to ignore
-import { useAtom } from 'jotai';
+import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'wouter';
-import { themeAtom, applyTheme, type Theme } from '@/atoms/themeAtom';
+import { Link, useLocation } from 'wouter';
+import { ThemeToggle } from '@/components/ThemeToggle/ThemeToggle';
+import { LanguageSwitcher } from '@/components/LanguageSwitcher/LanguageSwitcher';
 import styles from './Navigation.module.css';
 
 /**
  * Navigation component with theme toggle and language switcher
  *
  * Features:
- * - Links to Home and Applications pages
- * - Theme toggle (Light/Dark/System)
- * - Language switcher (EN/FR)
+ * - SPA navigation using wouter Link (no page reloads)
+ * - Theme toggle (Light/Dark/System) via extracted component
+ * - Language switcher (EN/FR) via extracted component
  * - Active link highlighting
  * - Responsive design
+ * - Optimized with useCallback and useMemo
  *
  * @example
  * ```tsx
@@ -22,104 +22,53 @@ import styles from './Navigation.module.css';
  * ```
  */
 export function Navigation(): JSX.Element {
-  const [theme, setTheme] = useAtom(themeAtom);
-  const { t, i18n } = useTranslation();
-  const locationResult = useLocation();
+  const { t } = useTranslation();
+  const [location] = useLocation();
 
-  const location: string = locationResult[0];
+  const isActive = useCallback(
+    (path: string): boolean => {
+      if (path === '/') {
+        return location === '/';
+      }
+      return location.startsWith(path);
+    },
+    [location]
+  );
 
-  const handleThemeChange = (newTheme: Theme): void => {
-    setTheme(newTheme);
-    applyTheme(newTheme);
-  };
+  const homeLinkClass = useMemo(
+    () => `${styles.link} ${isActive('/') ? styles.active : ''}`,
+    [isActive]
+  );
 
-  const handleLanguageChange = (lng: string): void => {
-    void i18n.changeLanguage(lng);
-  };
-
-  const isActive = (path: string): boolean => {
-    if (path === '/') {
-      return location === '/';
-    }
-    return location.startsWith(path);
-  };
+  const applicationsLinkClass = useMemo(
+    () => `${styles.link} ${isActive('/applications') ? styles.active : ''}`,
+    [isActive]
+  );
 
   return (
     <nav className={styles.navigation}>
       <div className={styles.container}>
         {/* Logo / Brand */}
         <div className={styles.brand}>
-          <a href="/" className={styles.logoLink}>
+          <Link href="/" className={styles.logoLink}>
             Nesto
-          </a>
+          </Link>
         </div>
 
         {/* Navigation Links */}
         <div className={styles.links}>
-          <a href="/" className={`${styles.link} ${isActive('/') ? styles.active : ''}`}>
+          <Link href="/" className={homeLinkClass}>
             {t('navigation.home')}
-          </a>
-          <a
-            href="/applications"
-            className={`${styles.link} ${isActive('/applications') ? styles.active : ''}`}
-          >
+          </Link>
+          <Link href="/applications" className={applicationsLinkClass}>
             {t('navigation.applications')}
-          </a>
+          </Link>
         </div>
 
         {/* Controls: Language + Theme */}
         <div className={styles.controls}>
-          {/* Language Switcher */}
-          <div className={styles.languageSwitcher}>
-            <button
-              type="button"
-              className={`${styles.languageButton} ${i18n.language === 'en' ? styles.activeLanguage : ''}`}
-              onClick={() => handleLanguageChange('en')}
-              aria-label="Switch to English"
-            >
-              EN
-            </button>
-            <span className={styles.separator}>|</span>
-            <button
-              type="button"
-              className={`${styles.languageButton} ${i18n.language === 'fr' ? styles.activeLanguage : ''}`}
-              onClick={() => handleLanguageChange('fr')}
-              aria-label="Passer au français"
-            >
-              FR
-            </button>
-          </div>
-
-          {/* Theme Toggle */}
-          <div className={styles.themeToggle}>
-            <button
-              type="button"
-              className={`${styles.themeButton} ${theme === 'light' ? styles.activeTheme : ''}`}
-              onClick={() => handleThemeChange('light')}
-              aria-label="Light theme"
-              title="Light"
-            >
-              ☀️
-            </button>
-            <button
-              type="button"
-              className={`${styles.themeButton} ${theme === 'dark' ? styles.activeTheme : ''}`}
-              onClick={() => handleThemeChange('dark')}
-              aria-label="Dark theme"
-              title="Dark"
-            >
-              🌙
-            </button>
-            <button
-              type="button"
-              className={`${styles.themeButton} ${theme === 'system' ? styles.activeTheme : ''}`}
-              onClick={() => handleThemeChange('system')}
-              aria-label="System theme"
-              title="System"
-            >
-              💻
-            </button>
-          </div>
+          <LanguageSwitcher />
+          <ThemeToggle />
         </div>
       </div>
     </nav>
