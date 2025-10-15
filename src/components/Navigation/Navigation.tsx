@@ -1,20 +1,19 @@
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'wouter';
 import { ThemeToggle } from '@/components/ThemeToggle/ThemeToggle';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher/LanguageSwitcher';
+import nestoLogo from '/assets/nestoIcon-Primary.png';
 import styles from './Navigation.module.css';
 
 /**
- * Navigation component with theme toggle and language switcher
+ * Navigation component matching wireframe design
  *
  * Features:
- * - SPA navigation using wouter Link (no page reloads)
- * - Theme toggle (Light/Dark/System) via extracted component
- * - Language switcher (EN/FR) via extracted component
- * - Active link highlighting
+ * - Nesto logo (left)
+ * - Applications link only (per wireframe - no Home link)
+ * - Theme toggle + Language switcher (right)
  * - Responsive design
- * - Optimized with useCallback and useMemo
  *
  * @example
  * ```tsx
@@ -25,24 +24,9 @@ export function Navigation(): JSX.Element {
   const { t } = useTranslation();
   const [location] = useLocation();
 
-  const isActive = useCallback(
-    (path: string): boolean => {
-      if (path === '/') {
-        return location === '/';
-      }
-      return location.startsWith(path);
-    },
-    [location]
-  );
-
-  const homeLinkClass = useMemo(
-    () => `${styles.link} ${isActive('/') ? styles.active : ''}`,
-    [isActive]
-  );
-
   const applicationsLinkClass = useMemo(
-    () => `${styles.link} ${isActive('/applications') ? styles.active : ''}`,
-    [isActive]
+    () => `${styles.link} ${location.startsWith('/applications') ? styles.active : ''}`,
+    [location]
   );
 
   return (
@@ -51,15 +35,12 @@ export function Navigation(): JSX.Element {
         {/* Logo / Brand */}
         <div className={styles.brand}>
           <Link href="/" className={styles.logoLink}>
-            Nesto
+            <img src={nestoLogo} alt="Nesto" className={styles.logo} />
           </Link>
         </div>
 
         {/* Navigation Links */}
         <div className={styles.links}>
-          <Link href="/" className={homeLinkClass}>
-            {t('navigation.home')}
-          </Link>
           <Link href="/applications" className={applicationsLinkClass}>
             {t('navigation.applications')}
           </Link>

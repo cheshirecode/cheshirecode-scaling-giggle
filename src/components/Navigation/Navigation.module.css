@@ -24,15 +24,20 @@
 }
 
 .logoLink {
-  font-size: var(--font-size-xl);
-  font-weight: 700;
-  color: var(--color-primary);
+  display: inline-block;
   text-decoration: none;
   transition: opacity 0.2s;
+  line-height: 0;
 }
 
 .logoLink:hover {
   opacity: 0.8;
+}
+
+.logo {
+  height: 32px;
+  width: auto;
+  display: block;
 }
 
 /* Navigation Links */

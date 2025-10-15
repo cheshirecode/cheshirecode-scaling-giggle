@@ -52,25 +52,27 @@ vi.mock('@/components/LanguageSwitcher/LanguageSwitcher', () => ({
 }));
 
 describe('Navigation', () => {
-  it('renders brand logo', () => {
+  it('renders brand logo image', () => {
     render(
       <Provider>
         <Navigation />
       </Provider>
     );
 
-    expect(screen.getByText('Nesto')).toBeInTheDocument();
+    const logo = screen.getByAltText('Nesto');
+    expect(logo).toBeInTheDocument();
+    expect(logo.tagName).toBe('IMG');
   });
 
-  it('renders navigation links', () => {
+  it('renders applications link only (per wireframe)', () => {
     render(
       <Provider>
         <Navigation />
       </Provider>
     );
 
-    expect(screen.getByText('Home')).toBeInTheDocument();
     expect(screen.getByText('Applications')).toBeInTheDocument();
+    expect(screen.queryByText('Home')).not.toBeInTheDocument();
   });
 
   it('uses wouter Link for SPA navigation', () => {
@@ -80,11 +82,8 @@ describe('Navigation', () => {
       </Provider>
     );
 
-    const homeLink = screen.getByText('Home');
-    expect(homeLink.tagName).toBe('A');
-    expect(homeLink).toHaveAttribute('href', '/');
-
     const applicationsLink = screen.getByText('Applications');
+    expect(applicationsLink.tagName).toBe('A');
     expect(applicationsLink).toHaveAttribute('href', '/applications');
   });
 
