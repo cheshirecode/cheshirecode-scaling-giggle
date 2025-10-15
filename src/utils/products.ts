@@ -78,3 +78,46 @@ export function groupAndFindBest(products: Product[]): BestProductsResult {
 
   return result;
 }
+
+/**
+ * Finds the best product (lowest bestRate) for a specific product type.
+ *
+ * If multiple products have the same lowest rate (ties), returns the first one
+ * after sorting by term (e.g., shorter term preferred).
+ *
+ * @param products - Array of products to search
+ * @param type - Product type to filter by (FIXED or VARIABLE)
+ * @returns Best product of the specified type, or undefined if none found
+ *
+ * @example
+ * ```ts
+ * const products = [
+ *   { id: 1, type: 'FIXED', bestRate: 4.5, term: '5_YEAR', ... },
+ *   { id: 2, type: 'FIXED', bestRate: 4.0, term: '3_YEAR', ... },
+ * ];
+ * const best = findBestProductByType(products, 'FIXED');
+ * // Returns product with id: 2 (lowest rate: 4.0)
+ * ```
+ */
+export function findBestProductByType(products: Product[], type: ProductType): Product | undefined {
+  const filtered = products.filter((p) => p.type === type);
+
+  if (filtered.length === 0) {
+    return undefined;
+  }
+
+  // Find minimum bestRate
+  const minRate = Math.min(...filtered.map((p) => p.bestRate));
+
+  // Get all products with minimum rate
+  const bestProducts = filtered.filter((p) => p.bestRate === minRate);
+
+  // Sort by term (prefer shorter terms) and return first
+  const termToNumber = (term: string): number => {
+    return parseInt(term.split('_')[0] ?? '0', 10);
+  };
+
+  bestProducts.sort((a, b) => termToNumber(a.term) - termToNumber(b.term));
+
+  return bestProducts[0];
+}
