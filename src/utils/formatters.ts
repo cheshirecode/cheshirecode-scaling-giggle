@@ -38,3 +38,30 @@ export function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }
 
+/**
+ * Formats a rate value as a percentage
+ * @param rate - The rate value (e.g., 3.5 for 3.50%)
+ * @param decimals - Number of decimal places (default: 2)
+ * @returns Formatted rate string (e.g., "3.50%")
+ *
+ * @example
+ * formatRate(3.5) // "3.50%"
+ * formatRate(4.125) // "4.13%"
+ */
+export function formatRate(rate: number, decimals = 2): string {
+  return `${rate.toFixed(decimals)}%`;
+}
+
+/**
+ * Formats a product term enum to human-readable string
+ * @param term - The product term enum (e.g., "3_YEAR")
+ * @returns Formatted term string (e.g., "3 Year")
+ *
+ * @example
+ * formatTerm("3_YEAR") // "3 Year"
+ * formatTerm("10_YEAR") // "10 Year"
+ */
+export function formatTerm(term: string): string {
+  const [years] = term.split('_');
+  return `${years} Year`;
+}
