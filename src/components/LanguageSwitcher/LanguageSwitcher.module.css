@@ -1,0 +1,37 @@
+.languageSwitcher {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.languageButton {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  cursor: pointer;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  transition: all 0.2s;
+}
+
+.languageButton:hover {
+  color: var(--color-text);
+  background: var(--color-surface-hover);
+}
+
+.languageButton:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.languageButton.active {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.separator {
+  color: var(--color-border);
+  user-select: none;
+}
