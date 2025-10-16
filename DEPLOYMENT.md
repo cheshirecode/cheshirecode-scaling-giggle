@@ -222,6 +222,24 @@ To enable automatic deployments in the future:
 
 ## 🔍 Recent Deployments
 
+### October 16, 2025 @ 11:22 AM ⭐ LATEST
+
+- **Commit**: `ecdb606` - chore: update package-lock.json after Node.js upgrade
+- **App**: https://cheshirecode-challenge-nesto-frontend-hqjs0bhe6.vercel.app ✅
+- **Storybook**: https://storybook-static-71yul72j0-dac4158s-projects.vercel.app ✅
+- **Changes**:
+  - Node.js v20.19.0 upgrade (Vite 5 compatibility)
+  - Pre-deployment validation system (`npm run validate`)
+  - Fixed: `crypto.hash` error in dev server
+  - All validation checks passing
+
+### October 15, 2025 @ 4:49 PM
+
+- **Commit**: `b510b8f` - fix: force clean build deployment
+- **App**: https://cheshirecode-challenge-nesto-frontend-nn2ezmn46.vercel.app
+- **Storybook**: https://storybook-static-f4aucico2-dac4158s-projects.vercel.app
+- **Changes**: React hooks fix (jotai in dependencies, dedupe config, use-sync-external-store)
+
 ### October 15, 2025 @ 4:03 PM
 
 - **Commit**: `099fd7e` - fix: remove @storybook/test from Story files
@@ -229,13 +247,8 @@ To enable automatic deployments in the future:
 - **Storybook**: https://storybook-static-hiqcyf92b-dac4158s-projects.vercel.app
 - **Changes**: Fixed production error (jotai dependency), removed @storybook/test
 
-### October 15, 2025 @ 3:56 PM
-
-- **Commit**: `ed71dc0` - feat: implement products page with SWR and parameterization
-- **Changes**: ProductsPage with best products, parameterization principle added
-
 ---
 
-**Last Updated**: October 15, 2025
+**Last Updated**: October 16, 2025
 **Current Version**: 1.0.0
 **Deployment Type**: Manual via CLI (both App + Storybook)
