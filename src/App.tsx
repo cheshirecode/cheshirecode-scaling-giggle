@@ -1,4 +1,5 @@
 import { Route, Switch, useLocation } from 'wouter';
+import { useTranslation } from 'react-i18next';
 import useSWR from 'swr';
 import { ErrorBoundary } from '@/components/ErrorBoundary/ErrorBoundary';
 import { Navigation } from '@/components/Navigation/Navigation';
@@ -29,6 +30,7 @@ interface ProductsPageProps {
 function ProductsPage({
   productTypes = DEFAULT_PRODUCT_TYPES_TO_DISPLAY,
 }: ProductsPageProps = {}): JSX.Element {
+  const { t } = useTranslation();
   const [, setLocation] = useLocation();
   const { data, error, isLoading } = useSWR<Product[], Error>('/products', (url: string) =>
     fetcher<Product[]>(url)
@@ -50,8 +52,8 @@ function ProductsPage({
     return (
       <div className="page page-center">
         <div className="error-message">
-          <h2>Unable to load products</h2>
-          <p>Please try again later.</p>
+          <h2>{t('products.loadingError')}</h2>
+          <p>{t('products.loadingErrorDesc')}</p>
         </div>
       </div>
     );
@@ -68,8 +70,8 @@ function ProductsPage({
     return (
       <div className="page page-center">
         <div className="empty-state">
-          <h2>No products available</h2>
-          <p>Please check back later.</p>
+          <h2>{t('products.noProducts')}</h2>
+          <p>{t('products.noProductsDesc')}</p>
         </div>
       </div>
     );

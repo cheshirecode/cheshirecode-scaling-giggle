@@ -21,7 +21,10 @@
     "rate": "Taux",
     "term": "Terme",
     "lender": "Prêteur",
-    "noProducts": "Aucun produit disponible"
+    "noProducts": "Aucun produit disponible",
+    "noProductsDesc": "Veuillez réessayer plus tard.",
+    "loadingError": "Impossible de charger les produits",
+    "loadingErrorDesc": "Veuillez réessayer plus tard."
   },
   "application": {
     "title": "Informations de contact",

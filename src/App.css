@@ -5,20 +5,21 @@
   position: relative;
 }
 
-/* Global Controls - Top Right Corner */
+/* Global Controls - Top Right Corner (Outside Navigation) */
 .app-controls {
   position: fixed;
-  top: var(--spacing-4);
-  right: var(--spacing-6);
-  z-index: 200;
+  top: var(--spacing-3);
+  right: var(--spacing-4);
+  z-index: 150; /* Above nav (100) but below modals/toasts */
   display: flex;
   align-items: center;
-  gap: var(--spacing-3);
+  gap: var(--spacing-2);
   padding: var(--spacing-2);
   background: var(--color-surface);
-  border-radius: var(--border-radius-lg);
-  box-shadow: var(--shadow-md);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
   border: 1px solid var(--color-border);
+  pointer-events: auto; /* Ensure clickable */
 }
 
 .main {
@@ -27,10 +28,12 @@
   max-width: 1280px;
   margin: 0 auto;
   padding: var(--spacing-8) var(--spacing-6);
+  /* Add top padding to avoid overlap with fixed controls */
+  padding-top: calc(var(--spacing-8) + var(--spacing-2));
 }
 
 .page {
-  padding: var(--spacing-8) 0;
+  padding: var(--spacing-6) 0;
 }
 
 .page h1 {

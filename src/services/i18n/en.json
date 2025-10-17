@@ -21,7 +21,10 @@
     "rate": "Rate",
     "term": "Term",
     "lender": "Lender",
-    "noProducts": "No products available"
+    "noProducts": "No products available",
+    "noProductsDesc": "Please check back later.",
+    "loadingError": "Unable to load products",
+    "loadingErrorDesc": "Please try again later."
   },
   "application": {
     "title": "Contact Information",
