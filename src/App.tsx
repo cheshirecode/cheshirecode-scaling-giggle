@@ -2,10 +2,10 @@ import { Route, Switch } from 'wouter';
 import { ErrorBoundary } from '@/components/ErrorBoundary/ErrorBoundary';
 import { Navigation } from '@/components/Navigation/Navigation';
 import { useThemeInitializer } from '@/hooks/useThemeInitializer';
-import { HomePage } from '@/pages/HomePage';
-import { ApplicationFormPage } from '@/pages/ApplicationFormPage';
-import { ApplicationsListPage } from '@/pages/ApplicationsListPage';
-import { NotFoundPage } from '@/pages/NotFoundPage';
+import { HomePage } from '@/pages/Home';
+import { ApplicationFormPage } from '@/pages/ApplicationForm';
+import { ApplicationsListPage } from '@/pages/ApplicationsList';
+import { NotFoundPage } from '@/pages/NotFound';
 import './App.css';
 
 /**
