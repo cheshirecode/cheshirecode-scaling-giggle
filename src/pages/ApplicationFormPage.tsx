@@ -22,10 +22,10 @@ interface FormData {
 }
 
 interface FormErrors {
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  phone?: string;
+  firstName?: string | undefined;
+  lastName?: string | undefined;
+  email?: string | undefined;
+  phone?: string | undefined;
 }
 
 interface FormTouched {
@@ -52,14 +52,11 @@ export function ApplicationFormPage(): JSX.Element {
 
   const productId = params?.productId ? parseInt(params.productId, 10) : undefined;
 
-  // Fetch product details
-  const { data: products, isLoading: isLoadingProduct } = useSWR<{ products: Product[] }>(
-    '/products/best',
-    fetcher
-  );
+  // Fetch all products from /api/products
+  const { data: products, isLoading: isLoadingProduct } = useSWR<Product[]>('/products', fetcher);
   const productError = !products && !isLoadingProduct;
 
-  const product = products?.products.find((p) => p.id === productId);
+  const product = products?.find((p) => p.id === productId);
 
   // Form state
   const [formData, setFormData] = useState<FormData>({
@@ -114,8 +111,8 @@ export function ApplicationFormPage(): JSX.Element {
     !hasErrors && Object.values(formData).every((value: string) => value.trim() !== '');
 
   // Handlers
-  const handleChange = (field: keyof FormData) => (value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+  const handleChange = (field: keyof FormData) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => ({ ...prev, [field]: e.target.value }));
     // Clear error when user starts typing
     if (touched[field]) {
       setTouched((prev) => ({ ...prev, [field]: false }));
@@ -189,7 +186,13 @@ export function ApplicationFormPage(): JSX.Element {
         {/* Left: Product Summary */}
         <aside className="product-summary">
           <h2 className="section-title">{t('application.selectedProduct')}</h2>
-          <ProductCard product={product} isBest={false} />
+          <ProductCard
+            product={product}
+            isBest={false}
+            onApply={() => {
+              /* Display only - no action needed */
+            }}
+          />
           <div className="product-details">
             <div className="detail-row">
               <span className="detail-label">{t('products.rate')}:</span>
@@ -222,7 +225,7 @@ export function ApplicationFormPage(): JSX.Element {
               value={formData.firstName}
               onChange={handleChange('firstName')}
               onBlur={handleBlur('firstName')}
-              error={errors.firstName}
+              {...(errors.firstName && { error: errors.firstName })}
               required
               disabled={isMutating}
             />
@@ -233,7 +236,7 @@ export function ApplicationFormPage(): JSX.Element {
               value={formData.lastName}
               onChange={handleChange('lastName')}
               onBlur={handleBlur('lastName')}
-              error={errors.lastName}
+              {...(errors.lastName && { error: errors.lastName })}
               required
               disabled={isMutating}
             />
@@ -244,7 +247,7 @@ export function ApplicationFormPage(): JSX.Element {
               value={formData.email}
               onChange={handleChange('email')}
               onBlur={handleBlur('email')}
-              error={errors.email}
+              {...(errors.email && { error: errors.email })}
               required
               disabled={isMutating}
             />
@@ -255,7 +258,7 @@ export function ApplicationFormPage(): JSX.Element {
               value={formData.phone}
               onChange={handleChange('phone')}
               onBlur={handleBlur('phone')}
-              error={errors.phone}
+              {...(errors.phone && { error: errors.phone })}
               required
               disabled={isMutating}
             />

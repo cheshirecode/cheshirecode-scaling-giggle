@@ -7,14 +7,6 @@ import { formatDate } from '@/utils/formatters';
 import type { Application, Product } from '@/types/api';
 import './ApplicationsListPage.css';
 
-interface ApplicationsResponse {
-  applications: Application[];
-}
-
-interface ProductsResponse {
-  products: Product[];
-}
-
 /**
  * Applications List Page - Screen 3
  * Route: /applications
@@ -25,26 +17,23 @@ interface ProductsResponse {
 export function ApplicationsListPage(): JSX.Element {
   const { t } = useTranslation();
 
-  // Fetch applications
-  const { data: appsData, isLoading: isLoadingApps } = useSWR<ApplicationsResponse>(
+  // Fetch applications from /api/applications
+  const { data: applications, isLoading: isLoadingApps } = useSWR<Application[]>(
     '/applications',
     fetcher
   );
 
-  // Fetch products to display product names
-  const { data: productsData, isLoading: isLoadingProducts } = useSWR<ProductsResponse>(
-    '/products/best',
-    fetcher
-  );
+  // Fetch products from /api/products to display product names
+  const { data: products, isLoading: isLoadingProducts } = useSWR<Product[]>('/products', fetcher);
 
-  const applications = appsData?.applications ?? [];
-  const products = productsData?.products ?? [];
+  const applicationsList = applications ?? [];
+  const productsList = products ?? [];
   const isLoading = isLoadingApps || isLoadingProducts;
-  const hasError = !appsData && !isLoadingApps;
+  const hasError = !applications && !isLoadingApps;
 
   // Helper to find product by ID
   const findProduct = (productId?: number): Product | undefined => {
-    return products.find((p) => p.id === productId);
+    return productsList.find((p) => p.id === productId);
   };
 
   // Loading state
@@ -69,7 +58,7 @@ export function ApplicationsListPage(): JSX.Element {
   }
 
   // Empty state
-  if (applications.length === 0) {
+  if (applicationsList.length === 0) {
     return (
       <div className="page page-center">
         <div className="empty-state">
@@ -86,12 +75,12 @@ export function ApplicationsListPage(): JSX.Element {
         <header className="applications-header">
           <h1>{t('applications.title')}</h1>
           <p className="applications-count" aria-live="polite">
-            {t('applications.count', { count: applications.length })}
+            {t('applications.count', { count: applicationsList.length })}
           </p>
         </header>
 
         <div className="applications-list" role="list">
-          {applications.map((application) => {
+          {applicationsList.map((application) => {
             const product = findProduct(application.productId);
             const applicant = application.applicants[0];
 

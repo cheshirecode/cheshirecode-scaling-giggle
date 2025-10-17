@@ -170,12 +170,3 @@ export const mockProducts: Product[] = [
     updated: '2024-10-15T10:00:00Z',
   },
 ];
-
-/**
- * Mock response for /api/products/best endpoint
- */
-export const mockBestProductsResponse = {
-  products: mockProducts,
-  count: mockProducts.length,
-  timestamp: new Date().toISOString(),
-};

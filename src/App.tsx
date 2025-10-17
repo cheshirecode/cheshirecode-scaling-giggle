@@ -13,10 +13,6 @@ import { ApplicationsListPage } from '@/pages/ApplicationsListPage';
 import type { Product, ProductType } from '@/types/api';
 import './App.css';
 
-interface BestProductsResponse {
-  products: Product[];
-}
-
 interface ProductsPageProps {
   /** Product types to display (defaults to FIXED + VARIABLE per wireframe) */
   productTypes?: ProductType[];
@@ -25,14 +21,15 @@ interface ProductsPageProps {
 /**
  * Products page showing best products by type
  * Per wireframe: displays best FIXED and VARIABLE products side-by-side
+ *
+ * Fetches from /api/products and filters client-side to find best FIXED and VARIABLE
  */
 function ProductsPage({
   productTypes = DEFAULT_PRODUCT_TYPES_TO_DISPLAY,
 }: ProductsPageProps = {}): JSX.Element {
   const [, setLocation] = useLocation();
-  const { data, error, isLoading } = useSWR<BestProductsResponse, Error>(
-    '/products/best',
-    (url: string) => fetcher<BestProductsResponse>(url)
+  const { data, error, isLoading } = useSWR<Product[], Error>('/products', (url: string) =>
+    fetcher<Product[]>(url)
   );
 
   const handleApply = (productId: number): void => {
@@ -58,7 +55,7 @@ function ProductsPage({
     );
   }
 
-  const products = data?.products ?? [];
+  const products = data ?? [];
 
   // Find best product for each requested type
   const bestProducts = productTypes
