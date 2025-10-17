@@ -5,7 +5,7 @@ import { Spinner } from '@/components/Spinner/Spinner';
 import { Button } from '@/components/Button/Button';
 import { fetcher } from '@/services/api';
 import type { Application, Product } from '@/types/api';
-import './ApplicationsListPage.css';
+import './index.css';
 
 /**
  * Applications List Page - Screen 3
@@ -18,7 +18,7 @@ import './ApplicationsListPage.css';
  *
  * Layout per wireframe: Table with columns: Name, Email, Phone, Product, Edit button
  */
-export function ApplicationsListPage(): JSX.Element {
+export default function ApplicationsListPage(): JSX.Element {
   const { t } = useTranslation();
   const [, setLocation] = useLocation();
 

@@ -6,7 +6,7 @@ import { Button } from '@/components/Button/Button';
  * 404 Not Found Page
  * Displayed when user navigates to an invalid route
  */
-export function NotFoundPage(): JSX.Element {
+export default function NotFoundPage(): JSX.Element {
   const { t } = useTranslation();
 
   return (

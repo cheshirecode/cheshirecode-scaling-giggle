@@ -26,7 +26,7 @@ interface HomePageProps {
  *
  * Layout per wireframe: displays best FIXED and VARIABLE products side-by-side
  */
-export function HomePage({
+export default function HomePage({
   productTypes = DEFAULT_PRODUCT_TYPES_TO_DISPLAY,
 }: HomePageProps = {}): JSX.Element {
   const { t } = useTranslation();

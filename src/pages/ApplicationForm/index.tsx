@@ -11,7 +11,7 @@ import { fetcher } from '@/services/api';
 import { validateEmail, validatePhone, validateRequired } from '@/utils/validators';
 import { formatPercentage } from '@/utils/formatters';
 import type { Product, Application } from '@/types/api';
-import './ApplicationFormPage.css';
+import './index.css';
 
 interface FormData {
   firstName: string;
@@ -46,7 +46,7 @@ interface FormTouched {
  * - Right: Contact information form
  * - Responsive: Stack vertically on mobile
  */
-export function ApplicationFormPage(): JSX.Element {
+export default function ApplicationFormPage(): JSX.Element {
   const { t } = useTranslation();
   const [, params] = useRoute<{ applicationId?: string }>('/apply/:applicationId');
   const [, setLocation] = useLocation();
