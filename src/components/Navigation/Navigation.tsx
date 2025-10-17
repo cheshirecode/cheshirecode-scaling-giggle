@@ -2,13 +2,15 @@ import { Link } from 'wouter';
 import { useTranslation } from 'react-i18next';
 import { ThemeToggle } from '@/components/ThemeToggle/ThemeToggle';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher/LanguageSwitcher';
+import nestoLogoPrimary from '@/assets/nesto-EN_Primary.png';
+import nestoLogoSecondary from '@/assets/nesto-EN_Secondary.png';
 import styles from './Navigation.module.css';
 
 /**
  * Navigation component matching wireframe design
  *
  * Layout per wireframe:
- * - Left: "nesto®" text logo (with copyright superscript)
+ * - Left: nesto® logo image (theme-aware: Primary for light, Secondary for dark)
  * - Center: Empty
  * - Right: "Applications" link + Language/Theme controls
  *
@@ -26,9 +28,16 @@ export function Navigation(): JSX.Element {
         {/* Left: nesto® Logo */}
         <div className={styles.brand}>
           <Link href="/" className={styles.logoLink}>
-            <span className={styles.logoText}>
-              nesto<sup className={styles.copyright}>®</sup>
-            </span>
+            <img
+              src={nestoLogoPrimary}
+              alt="nesto"
+              className={`${styles.logo} ${styles.logoLight}`}
+            />
+            <img
+              src={nestoLogoSecondary}
+              alt="nesto"
+              className={`${styles.logo} ${styles.logoDark}`}
+            />
           </Link>
         </div>
 

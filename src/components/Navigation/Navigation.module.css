@@ -24,29 +24,53 @@
 }
 
 .logoLink {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   text-decoration: none;
   transition: opacity 0.2s;
+  position: relative;
+  height: 40px; /* Fixed height for consistency */
 }
 
 .logoLink:hover {
   opacity: 0.85;
 }
 
-.logoText {
-  font-size: var(--font-size-2xl);
-  font-weight: 700;
-  color: var(--color-primary);
-  font-family: var(--font-family);
-  letter-spacing: -0.02em;
+.logo {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+  display: block;
 }
 
-.copyright {
-  font-size: var(--font-size-xs);
-  font-weight: 400;
-  margin-left: 1px;
-  vertical-align: super;
-  line-height: 0;
+/* Theme-aware logo switching */
+.logoLight {
+  display: block;
+}
+
+.logoDark {
+  display: none;
+}
+
+/* Dark mode: swap logo visibility */
+[data-theme='dark'] .logoLight {
+  display: none;
+}
+
+[data-theme='dark'] .logoDark {
+  display: block;
+}
+
+/* System dark mode preference (fallback) */
+@media (prefers-color-scheme: dark) {
+  /* Only apply if no explicit theme is set */
+  html:not([data-theme='light']) .logoLight {
+    display: none;
+  }
+
+  html:not([data-theme='light']) .logoDark {
+    display: block;
+  }
 }
 
 /* Center: Spacer (empty middle section per wireframe) */
@@ -107,6 +131,14 @@
     gap: var(--spacing-2);
     padding-left: var(--spacing-5);
   }
+
+  .logo {
+    height: 36px;
+  }
+
+  .logoLink {
+    height: 36px;
+  }
 }
 
 /* Responsive: Mobile (< 768px) */
@@ -120,8 +152,12 @@
     gap: var(--spacing-4);
   }
 
-  .logoText {
-    font-size: var(--font-size-xl);
+  .logo {
+    height: 32px;
+  }
+
+  .logoLink {
+    height: 32px;
   }
 
   .actions {
@@ -146,8 +182,12 @@
     gap: var(--spacing-3);
   }
 
-  .logoText {
-    font-size: var(--font-size-lg);
+  .logo {
+    height: 28px;
+  }
+
+  .logoLink {
+    height: 28px;
   }
 
   .actions {
