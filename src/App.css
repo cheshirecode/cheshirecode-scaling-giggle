@@ -5,34 +5,23 @@
   position: relative;
 }
 
-/* Global Controls - Top Right Corner (Outside Navigation) */
-.app-controls {
-  position: fixed;
-  top: var(--spacing-3);
-  right: var(--spacing-4);
-  z-index: 150; /* Above nav (100) but below modals/toasts */
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-2);
-  padding: var(--spacing-2);
-  background: var(--color-surface);
-  border-radius: var(--border-radius-md);
-  box-shadow: var(--shadow-sm);
-  border: 1px solid var(--color-border);
-  pointer-events: auto; /* Ensure clickable */
-}
-
+/* Main content area with 12-column grid system */
 .main {
   flex: 1;
   width: 100%;
-  max-width: 1280px;
+  max-width: 1440px; /* Modern wide container */
   margin: 0 auto;
-  padding: var(--spacing-8) var(--spacing-6);
-  /* Add top padding to avoid overlap with fixed controls */
-  padding-top: calc(var(--spacing-8) + var(--spacing-2));
+  padding: var(--spacing-10) var(--spacing-6);
+
+  /* 12-column grid for responsive layouts */
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--spacing-6);
 }
 
 .page {
+  /* Full-width content within grid */
+  grid-column: 1 / -1;
   padding: var(--spacing-6) 0;
 }
 
@@ -59,13 +48,14 @@
   min-height: 500px;
 }
 
-/* Products grid - Per wireframe: side-by-side on desktop */
+/* Products grid - Modern 12-column grid layout */
 .products-grid {
+  /* Span 10 columns centered (leave 1 col margin on each side) */
+  grid-column: 2 / 12;
+
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: var(--spacing-8);
-  max-width: 1000px;
-  margin: 0 auto;
   padding: var(--spacing-6) 0;
 }
 
@@ -92,37 +82,46 @@
   line-height: var(--line-height-relaxed);
 }
 
-/* Responsive: Tablet */
+/* Responsive: Large Desktop (1200px+) */
+@media (min-width: 1200px) {
+  .products-grid {
+    /* On very wide screens, use 8 columns (4 per card) with 2 col margins */
+    grid-column: 3 / 11;
+    gap: var(--spacing-10);
+  }
+}
+
+/* Responsive: Tablet (768px - 1024px) */
 @media (max-width: 1024px) {
   .main {
-    padding: var(--spacing-6) var(--spacing-4);
+    padding: var(--spacing-8) var(--spacing-4);
   }
 
   .products-grid {
+    /* Use full width (all 12 columns) on tablet */
+    grid-column: 1 / -1;
     gap: var(--spacing-6);
   }
 }
 
-/* Responsive: Mobile */
+/* Responsive: Mobile (< 768px) */
 @media (max-width: 768px) {
-  .app-controls {
-    top: var(--spacing-3);
-    right: var(--spacing-3);
-    gap: var(--spacing-2);
-    padding: var(--spacing-2);
-  }
-
   .main {
-    padding: var(--spacing-4) var(--spacing-3);
+    padding: var(--spacing-6) var(--spacing-3);
+    /* Simplify to single column on mobile */
+    display: block;
   }
 
   .page {
-    padding: var(--spacing-6) 0;
+    padding: var(--spacing-4) 0;
   }
 
   .products-grid {
-    grid-template-columns: 1fr;
+    /* Stack vertically on mobile */
+    display: flex;
+    flex-direction: column;
     gap: var(--spacing-5);
+    padding: var(--spacing-4) 0;
   }
 
   .error-message,
