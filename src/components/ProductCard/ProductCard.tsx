@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import type { Product } from '@/types/api';
 import { formatRate, formatTerm } from '@/utils/formatters';
 import { Button } from '@/components/Button/Button';
@@ -19,6 +20,10 @@ export interface ProductCardProps {
 /**
  * Product card component for displaying mortgage product information
  *
+ * Internationalization:
+ * - Labels (Rate, Term, Type, Apply, Best Rate) are translated
+ * - Product data (name, rate, term, type) comes from API and is NOT translated
+ *
  * @example
  * ```tsx
  * <ProductCard
@@ -29,6 +34,8 @@ export interface ProductCardProps {
  * ```
  */
 export function ProductCard({ product, isBest = false, onApply }: ProductCardProps): JSX.Element {
+  const { t } = useTranslation();
+
   const handleApply = (): void => {
     onApply(product.id);
   };
@@ -36,17 +43,18 @@ export function ProductCard({ product, isBest = false, onApply }: ProductCardPro
   return (
     <Card className={styles.card}>
       <div className={styles.header}>
+        {/* Product name from API - NOT translated */}
         <h3 className={styles.name}>{product.name}</h3>
         {isBest && (
-          <span className={styles.bestBadge} aria-label="Best rate">
-            Best Rate
+          <span className={styles.bestBadge} aria-label={t('products.bestRate')}>
+            {t('products.bestRate')}
           </span>
         )}
       </div>
 
       <div className={styles.details}>
         <div className={styles.rate}>
-          <span className={styles.rateLabel}>Rate</span>
+          <span className={styles.rateLabel}>{t('products.rate')}</span>
           <span className={styles.rateValue} data-testid="product-rate">
             {formatRate(product.bestRate)}
           </span>
@@ -54,14 +62,16 @@ export function ProductCard({ product, isBest = false, onApply }: ProductCardPro
 
         <div className={styles.info}>
           <div className={styles.infoItem}>
-            <span className={styles.infoLabel}>Term</span>
+            <span className={styles.infoLabel}>{t('products.term')}</span>
+            {/* Term value from API - NOT translated */}
             <span className={styles.infoValue} data-testid="product-term">
               {formatTerm(product.term)}
             </span>
           </div>
 
           <div className={styles.infoItem}>
-            <span className={styles.infoLabel}>Type</span>
+            <span className={styles.infoLabel}>{t('products.type')}</span>
+            {/* Type value from API - NOT translated */}
             <span className={`${styles.infoValue} ${styles.typeBadge}`} data-testid="product-type">
               {product.type}
             </span>
@@ -73,9 +83,9 @@ export function ProductCard({ product, isBest = false, onApply }: ProductCardPro
         variant="primary"
         fullWidth
         onClick={handleApply}
-        aria-label={`Apply for ${product.name}`}
+        aria-label={`${t('products.apply')} - ${product.name}`}
       >
-        Apply
+        {t('products.apply')}
       </Button>
     </Card>
   );
