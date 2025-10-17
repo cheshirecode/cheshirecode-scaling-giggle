@@ -1,8 +1,25 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import type { Product } from '@/types/api';
 import { ProductCard } from './ProductCard';
+
+// Mock react-i18next
+vi.mock('react-i18next', () => ({
+  useTranslation: () => ({
+    t: (key: string) => {
+      const translations: Record<string, string> = {
+        'products.bestRate': 'Best Rate',
+        'products.rate': 'Rate',
+        'products.term': 'Term',
+        'products.type': 'Type',
+        'products.apply': 'Apply',
+        'products.lender': 'Lender',
+      };
+      return translations[key] || key;
+    },
+  }),
+}));
 
 const mockProduct: Product = {
   id: 1,
@@ -64,7 +81,7 @@ describe('ProductCard', () => {
     const onApply = vi.fn();
     render(<ProductCard product={mockProduct} isBest={true} onApply={onApply} />);
 
-    const badge = screen.getByLabelText('Best rate');
+    const badge = screen.getByLabelText('Best Rate');
     expect(badge).toBeInTheDocument();
     expect(badge).toHaveTextContent('Best Rate');
   });
@@ -73,14 +90,14 @@ describe('ProductCard', () => {
     const onApply = vi.fn();
     render(<ProductCard product={mockProduct} isBest={false} onApply={onApply} />);
 
-    expect(screen.queryByLabelText('Best rate')).not.toBeInTheDocument();
+    expect(screen.queryByLabelText('Best Rate')).not.toBeInTheDocument();
   });
 
   it('hides best rate badge by default', () => {
     const onApply = vi.fn();
     render(<ProductCard product={mockProduct} onApply={onApply} />);
 
-    expect(screen.queryByLabelText('Best rate')).not.toBeInTheDocument();
+    expect(screen.queryByLabelText('Best Rate')).not.toBeInTheDocument();
   });
 
   it('calls onApply with product ID when apply button is clicked', async () => {

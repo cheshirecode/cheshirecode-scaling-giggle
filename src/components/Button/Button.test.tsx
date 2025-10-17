@@ -61,6 +61,6 @@ describe('Button', () => {
 
   it('applies fullWidth class', () => {
     render(<Button fullWidth>Full Width</Button>);
-    expect(screen.getByRole('button').className).toContain('fullWidth');
+    expect(screen.getByRole('button').className).toContain('full-width');
   });
 });

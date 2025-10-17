@@ -59,9 +59,12 @@ describe('Navigation', () => {
       </Provider>
     );
 
-    const logo = screen.getByAltText('Nesto');
-    expect(logo).toBeInTheDocument();
-    expect(logo.tagName).toBe('IMG');
+    // Check for theme-aware logo images (light and dark mode)
+    const logos = screen.getAllByAltText('nesto');
+    expect(logos).toHaveLength(2); // One for light, one for dark mode
+    logos.forEach((logo) => {
+      expect(logo.tagName).toBe('IMG');
+    });
   });
 
   it('renders applications link only (per wireframe)', () => {

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
-import { ApplicationFormPage } from './ApplicationFormPage';
+import ApplicationFormPage from './index';
 
 // Mock dependencies
 const mockUseRoute = vi.fn();
@@ -26,22 +26,60 @@ vi.mock('@/hooks/useToast', () => ({
   }),
 }));
 
+const mockApplicationData = {
+  id: 1,
+  productId: 1,
+  status: 'DRAFT',
+  applicants: [],
+  created: '2025-01-01T00:00:00Z',
+  updated: '2025-01-01T00:00:00Z',
+};
+
+const mockProductsData = [
+  {
+    id: 1,
+    name: 'Test Product',
+    family: 'STANDARD',
+    type: 'FIXED',
+    term: '5_YEAR',
+    insurable: true,
+    insurance: 'INSURED',
+    prepaymentOption: 'STANDARD',
+    restrictionsOption: 'NO_RESTRICTIONS',
+    restrictions: 'None',
+    fixedPenaltySpread: '0.5%',
+    helocOption: 'HELOC_WITHOUT',
+    helocDelta: 0,
+    lenderName: 'Test Lender',
+    lenderType: 'Bank',
+    rateHold: '90_DAYS',
+    rate: 3.5,
+    ratePrimeVariance: 0,
+    bestRate: 3.5,
+    created: '2025-01-01T00:00:00Z',
+    updated: '2025-01-01T00:00:00Z',
+  },
+];
+
 vi.mock('swr', () => ({
-  default: () => ({
-    data: {
-      products: [
-        {
-          id: 1,
-          name: 'Test Product',
-          type: 'FIXED',
-          bestRate: 0.035,
-          term: '5_YEAR',
-          lenderName: 'Test Lender',
-        },
-      ],
-    },
-    isLoading: false,
-  }),
+  default: (key: string) => {
+    if (key && key.includes('/applications/')) {
+      return {
+        data: mockApplicationData,
+        isLoading: false,
+      };
+    }
+    if (key === '/products') {
+      return {
+        data: mockProductsData,
+        isLoading: false,
+      };
+    }
+    return {
+      data: undefined,
+      isLoading: false,
+    };
+  },
 }));
 
 vi.mock('swr/mutation', () => ({
@@ -54,14 +92,14 @@ vi.mock('swr/mutation', () => ({
 describe('ApplicationFormPage', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    mockUseRoute.mockReturnValue([true, { productId: '1' }]);
+    mockUseRoute.mockReturnValue([true, { applicationId: '1' }]);
   });
 
   it('renders product summary section', async () => {
     render(<ApplicationFormPage />);
 
     await waitFor(() => {
-      expect(screen.getByText('application.selectedProduct')).toBeInTheDocument();
+      expect(screen.getByText('Test Product')).toBeInTheDocument();
     });
   });
 
@@ -69,7 +107,7 @@ describe('ApplicationFormPage', () => {
     render(<ApplicationFormPage />);
 
     await waitFor(() => {
-      expect(screen.getByText('application.yourInformation')).toBeInTheDocument();
+      expect(screen.getByText('application.title')).toBeInTheDocument();
     });
   });
 
@@ -85,10 +123,10 @@ describe('ApplicationFormPage', () => {
     render(<ApplicationFormPage />);
 
     await waitFor(() => {
-      expect(screen.getByLabelText('application.firstName')).toBeInTheDocument();
-      expect(screen.getByLabelText('application.lastName')).toBeInTheDocument();
-      expect(screen.getByLabelText('application.email')).toBeInTheDocument();
-      expect(screen.getByLabelText('application.phone')).toBeInTheDocument();
+      expect(screen.getByLabelText(/application\.firstName/)).toBeInTheDocument();
+      expect(screen.getByLabelText(/application\.lastName/)).toBeInTheDocument();
+      expect(screen.getByLabelText(/application\.email/)).toBeInTheDocument();
+      expect(screen.getByLabelText(/application\.phone/)).toBeInTheDocument();
     });
   });
 

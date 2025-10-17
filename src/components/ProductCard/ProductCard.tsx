@@ -83,7 +83,7 @@ export function ProductCard({ product, isBest = false, onApply }: ProductCardPro
         variant="primary"
         fullWidth
         onClick={handleApply}
-        aria-label={`${t('products.apply')} - ${product.name}`}
+        aria-label={`${t('products.apply')} for ${product.name}`}
       >
         {t('products.apply')}
       </Button>
