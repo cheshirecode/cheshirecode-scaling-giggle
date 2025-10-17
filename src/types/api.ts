@@ -16,10 +16,7 @@ export type ProductTerm =
   | '10_YEAR';
 export type Insurance = 'INSURED' | 'CONVENTIONAL';
 export type PrepaymentOption = 'STANDARD' | 'ENHANCED';
-export type RestrictionsOption =
-  | 'NO_RESTRICTIONS'
-  | 'SOME_RESTRICTIONS'
-  | 'MORE_RESTRICTIONS';
+export type RestrictionsOption = 'NO_RESTRICTIONS' | 'SOME_RESTRICTIONS' | 'MORE_RESTRICTIONS';
 export type HelocOption = 'HELOC_WITH' | 'HELOC_WITHOUT';
 export type RateHold = '30_DAYS' | '45_DAYS' | '60_DAYS' | '90_DAYS' | '120_DAYS';
 
@@ -69,8 +66,11 @@ export interface CreateApplication {
   productId: number;
 }
 
+export interface UpdateApplication {
+  applicants?: Applicant[];
+}
+
 /**
  * Grouped products by type for UI display
  */
 export type GroupedProducts = Record<ProductType, Product[]>;
-
