@@ -1,19 +1,16 @@
-import { useMemo } from 'react';
+import { Link } from 'wouter';
 import { useTranslation } from 'react-i18next';
-import { Link, useLocation } from 'wouter';
-import { ThemeToggle } from '@/components/ThemeToggle/ThemeToggle';
-import { LanguageSwitcher } from '@/components/LanguageSwitcher/LanguageSwitcher';
-import nestoLogo from '/assets/nestoIcon-Primary.png';
 import styles from './Navigation.module.css';
 
 /**
  * Navigation component matching wireframe design
  *
- * Features:
- * - Nesto logo (left)
- * - Applications link only (per wireframe - no Home link)
- * - Theme toggle + Language switcher (right)
- * - Responsive design
+ * Layout per wireframe:
+ * - Left: "nesto®" text logo (with copyright superscript)
+ * - Center: Empty
+ * - Right: "Applications" link (modern button style)
+ *
+ * Note: Language/Theme toggles are handled at App level (top-right corner)
  *
  * @example
  * ```tsx
@@ -22,34 +19,27 @@ import styles from './Navigation.module.css';
  */
 export function Navigation(): JSX.Element {
   const { t } = useTranslation();
-  const [location] = useLocation();
-
-  const applicationsLinkClass = useMemo(
-    () => `${styles.link} ${location.startsWith('/applications') ? styles.active : ''}`,
-    [location]
-  );
 
   return (
     <nav className={styles.navigation}>
       <div className={styles.container}>
-        {/* Logo / Brand */}
+        {/* Left: nesto® Logo */}
         <div className={styles.brand}>
           <Link href="/" className={styles.logoLink}>
-            <img src={nestoLogo} alt="Nesto" className={styles.logo} />
+            <span className={styles.logoText}>
+              nesto<sup className={styles.copyright}>®</sup>
+            </span>
           </Link>
         </div>
 
-        {/* Navigation Links */}
-        <div className={styles.links}>
-          <Link href="/applications" className={applicationsLinkClass}>
+        {/* Center: Empty (spacer for flex layout) */}
+        <div className={styles.spacer} />
+
+        {/* Right: Applications Link */}
+        <div className={styles.actions}>
+          <Link href="/applications" className={styles.applicationsLink}>
             {t('navigation.applications')}
           </Link>
-        </div>
-
-        {/* Controls: Language + Theme */}
-        <div className={styles.controls}>
-          <LanguageSwitcher />
-          <ThemeToggle />
         </div>
       </div>
     </nav>

@@ -4,6 +4,8 @@ import { ErrorBoundary } from '@/components/ErrorBoundary/ErrorBoundary';
 import { Navigation } from '@/components/Navigation/Navigation';
 import { ProductCard } from '@/components/ProductCard/ProductCard';
 import { Spinner } from '@/components/Spinner/Spinner';
+import { ThemeToggle } from '@/components/ThemeToggle/ThemeToggle';
+import { LanguageSwitcher } from '@/components/LanguageSwitcher/LanguageSwitcher';
 import { useThemeInitializer } from '@/hooks/useThemeInitializer';
 import { fetcher } from '@/services/api';
 import { findBestProductByType } from '@/utils/products';
@@ -100,7 +102,14 @@ function App(): JSX.Element {
   return (
     <ErrorBoundary>
       <div className="app">
+        {/* Global Controls - Top Right Corner (outside nav) */}
+        <div className="app-controls">
+          <LanguageSwitcher />
+          <ThemeToggle />
+        </div>
+
         <Navigation />
+
         <main className="main">
           <Switch>
             <Route path="/">{() => <ProductsPage />}</Route>

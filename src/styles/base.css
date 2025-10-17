@@ -2,6 +2,9 @@
  * Base Styles - Global styles using design tokens
  */
 
+/* Import Modern Web Fonts from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
+
 body {
   margin: 0;
   padding: 0;
@@ -13,6 +16,10 @@ body {
   background-color: var(--color-bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings:
+    'kern' 1,
+    'liga' 1;
 }
 
 #root {
@@ -21,24 +28,30 @@ body {
   flex-direction: column;
 }
 
-/* Typography */
+/* Typography - Headings use Plus Jakarta Sans */
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  font-weight: var(--font-weight-semibold);
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-bold);
   line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
   color: var(--color-text);
+  margin: 0 0 var(--spacing-4) 0;
 }
 
 h1 {
   font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-extrabold);
+  margin-bottom: var(--spacing-6);
 }
 
 h2 {
   font-size: var(--font-size-2xl);
+  margin-bottom: var(--spacing-5);
 }
 
 h3 {
@@ -47,10 +60,17 @@ h3 {
 
 h4 {
   font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
 }
 
+/* Paragraph spacing */
 p {
-  margin-bottom: var(--space-md);
+  margin: 0 0 var(--spacing-4) 0;
+  line-height: var(--line-height-relaxed);
+}
+
+p:last-child {
+  margin-bottom: 0;
 }
 
 a {
@@ -122,4 +142,3 @@ select:disabled {
   white-space: nowrap;
   border-width: 0;
 }
-
