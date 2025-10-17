@@ -41,7 +41,8 @@ export function ApplicationsListPage(): JSX.Element {
     return productsList.find((p) => p.id === productId);
   };
 
-  // Filter to only show applications with complete contact info (per requirements)
+  // Filter to only show applications with complete contact info (per README requirements)
+  // "only display applications that have valid data (i.e. have a first name, last name, email, and phone number)"
   const completeApplications = applicationsList.filter((app) => {
     const applicant = app.applicants[0];
     return (

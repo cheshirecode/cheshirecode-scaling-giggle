@@ -64,6 +64,7 @@ export interface Application {
 
 export interface CreateApplication {
   productId: number;
+  applicants?: Applicant[];
 }
 
 export interface UpdateApplication {

@@ -137,7 +137,18 @@ export function ApplicationFormPage(): JSX.Element {
       return;
     }
 
-    trigger({ productId })
+    // Submit application with contact information
+    trigger({
+      productId,
+      applicants: [
+        {
+          firstName: formData.firstName.trim(),
+          lastName: formData.lastName.trim(),
+          email: formData.email.trim(),
+          phone: formData.phone.trim(),
+        },
+      ],
+    })
       .then(() => {
         showToast({
           type: 'success',
