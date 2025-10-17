@@ -8,6 +8,7 @@ import { useThemeInitializer } from '@/hooks/useThemeInitializer';
 import { fetcher } from '@/services/api';
 import { findBestProductByType } from '@/utils/products';
 import { DEFAULT_PRODUCT_TYPES_TO_DISPLAY } from '@/utils/constants';
+import { ApplicationFormPage } from '@/pages/ApplicationFormPage';
 import type { Product, ProductType } from '@/types/api';
 import './App.css';
 
@@ -114,6 +115,7 @@ function App(): JSX.Element {
         <main className="main">
           <Switch>
             <Route path="/">{() => <ProductsPage />}</Route>
+            <Route path="/apply/:productId" component={ApplicationFormPage} />
             <Route path="/applications" component={ApplicationsPage} />
             <Route component={NotFoundPage} />
           </Switch>

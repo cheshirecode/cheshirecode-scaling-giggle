@@ -1,0 +1,127 @@
+/* Application Form Page - Screen 2 */
+
+.application-form-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-xl);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-lg);
+}
+
+/* Desktop: side-by-side layout */
+@media (min-width: 768px) {
+  .application-form-container {
+    grid-template-columns: 380px 1fr;
+    gap: var(--space-2xl);
+  }
+}
+
+/* Section titles */
+.section-title {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  margin: 0 0 var(--space-lg);
+  color: var(--color-text);
+}
+
+/* Product Summary - Left Side */
+.product-summary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.product-details {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.detail-value {
+  font-size: var(--font-size-md);
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+/* Contact Form - Right Side */
+.contact-form-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-xl);
+}
+
+.form-actions {
+  margin-top: var(--space-md);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.form-actions button {
+  min-width: 200px;
+}
+
+/* Mobile: stack vertically */
+@media (max-width: 767px) {
+  .application-form-container {
+    padding: var(--space-md);
+  }
+
+  .contact-form {
+    padding: var(--space-lg);
+  }
+
+  .form-actions button {
+    width: 100%;
+    min-width: unset;
+  }
+}
+
+/* Error Message Styling */
+.error-message {
+  text-align: center;
+  max-width: 500px;
+}
+
+.error-message h2 {
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--space-md);
+  color: var(--color-text);
+}
+
+.error-message p {
+  font-size: var(--font-size-md);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-xl);
+}

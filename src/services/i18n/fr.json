@@ -33,7 +33,15 @@
     "update": "Mettre à jour les informations",
     "saved": "Informations enregistrées avec succès",
     "updated": "Informations mises à jour avec succès",
-    "error": "Échec de l'enregistrement des informations"
+    "error": "Échec de l'enregistrement des informations",
+    "selectedProduct": "Produit sélectionné",
+    "yourInformation": "Vos informations",
+    "saveApplicantInfo": "Enregistrer les informations du demandeur",
+    "productNotFound": "Produit non trouvé",
+    "productNotFoundDesc": "Le produit que vous recherchez n'existe pas.",
+    "backToProducts": "Retour aux produits",
+    "applicationCreated": "Demande créée avec succès!",
+    "applicationFailed": "Échec de la création de la demande. Veuillez réessayer."
   },
   "applications": {
     "title": "Mes demandes",
@@ -48,4 +56,3 @@
     "invalidPhone": "Veuillez entrer un numéro de téléphone valide"
   }
 }
-

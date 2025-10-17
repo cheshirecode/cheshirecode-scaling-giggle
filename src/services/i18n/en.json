@@ -33,7 +33,15 @@
     "update": "Update Information",
     "saved": "Information saved successfully",
     "updated": "Information updated successfully",
-    "error": "Failed to save information"
+    "error": "Failed to save information",
+    "selectedProduct": "Selected Product",
+    "yourInformation": "Your Information",
+    "saveApplicantInfo": "Save applicant info",
+    "productNotFound": "Product not found",
+    "productNotFoundDesc": "The product you're looking for doesn't exist.",
+    "backToProducts": "Back to Products",
+    "applicationCreated": "Application created successfully!",
+    "applicationFailed": "Failed to create application. Please try again."
   },
   "applications": {
     "title": "My Applications",
@@ -48,4 +56,3 @@
     "invalidPhone": "Please enter a valid phone number"
   }
 }
-
