@@ -46,9 +46,15 @@
   "applications": {
     "title": "My Applications",
     "noApplications": "No applications found",
+    "noApplicationsDesc": "You haven't submitted any mortgage applications yet.",
     "created": "Created",
     "product": "Product",
-    "viewDetails": "View Details"
+    "viewDetails": "View Details",
+    "count": "{{count}} application(s)",
+    "type": "Type",
+    "id": "ID",
+    "unknownProduct": "Unknown Product",
+    "loadError": "Unable to load applications. Please try again later."
   },
   "validation": {
     "required": "This field is required",

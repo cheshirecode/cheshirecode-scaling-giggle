@@ -9,6 +9,7 @@ import { fetcher } from '@/services/api';
 import { findBestProductByType } from '@/utils/products';
 import { DEFAULT_PRODUCT_TYPES_TO_DISPLAY } from '@/utils/constants';
 import { ApplicationFormPage } from '@/pages/ApplicationFormPage';
+import { ApplicationsListPage } from '@/pages/ApplicationsListPage';
 import type { Product, ProductType } from '@/types/api';
 import './App.css';
 
@@ -86,15 +87,6 @@ function ProductsPage({
   );
 }
 
-function ApplicationsPage(): JSX.Element {
-  return (
-    <div className="page">
-      <h1>My Applications</h1>
-      <p>Your mortgage applications will appear here.</p>
-    </div>
-  );
-}
-
 function NotFoundPage(): JSX.Element {
   return (
     <div className="page">
@@ -116,7 +108,7 @@ function App(): JSX.Element {
           <Switch>
             <Route path="/">{() => <ProductsPage />}</Route>
             <Route path="/apply/:productId" component={ApplicationFormPage} />
-            <Route path="/applications" component={ApplicationsPage} />
+            <Route path="/applications" component={ApplicationsListPage} />
             <Route component={NotFoundPage} />
           </Switch>
         </main>

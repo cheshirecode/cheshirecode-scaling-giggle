@@ -46,9 +46,15 @@
   "applications": {
     "title": "Mes demandes",
     "noApplications": "Aucune demande trouvée",
+    "noApplicationsDesc": "Vous n'avez encore soumis aucune demande d'hypothèque.",
     "created": "Créé",
     "product": "Produit",
-    "viewDetails": "Voir les détails"
+    "viewDetails": "Voir les détails",
+    "count": "{{count}} demande(s)",
+    "type": "Type",
+    "id": "ID",
+    "unknownProduct": "Produit inconnu",
+    "loadError": "Impossible de charger les demandes. Veuillez réessayer plus tard."
   },
   "validation": {
     "required": "Ce champ est requis",

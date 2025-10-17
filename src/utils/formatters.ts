@@ -65,3 +65,17 @@ export function formatTerm(term: string): string {
   const [years] = term.split('_');
   return `${years} Year`;
 }
+
+/**
+ * Format an ISO date string to a localized date
+ * @param dateString - ISO date string
+ * @returns Formatted date string (e.g., "Jan 15, 2025")
+ */
+export function formatDate(dateString: string): string {
+  const date = new Date(dateString);
+  return new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  }).format(date);
+}
