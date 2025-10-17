@@ -1,5 +1,5 @@
 import type { HTMLAttributes } from 'react';
-import styles from './Card.module.css';
+import './Card.css';
 
 export interface CardProps extends HTMLAttributes<HTMLDivElement> {
   interactive?: boolean;
@@ -12,9 +12,7 @@ export function Card({
   children,
   ...props
 }: CardProps): JSX.Element {
-  const classes = [styles.card, interactive && styles.interactive, className]
-    .filter(Boolean)
-    .join(' ');
+  const classes = ['card', interactive && 'interactive', className].filter(Boolean).join(' ');
 
   return (
     <div
@@ -27,4 +25,3 @@ export function Card({
     </div>
   );
 }
-

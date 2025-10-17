@@ -3,7 +3,7 @@ import type { Product } from '@/types/api';
 import { formatRate, formatTerm } from '@/utils/formatters';
 import { Button } from '@/components/Button/Button';
 import { Card } from '@/components/Card/Card';
-import styles from './ProductCard.module.css';
+import './ProductCard.css';
 
 /**
  * ProductCard component props
@@ -41,38 +41,38 @@ export function ProductCard({ product, isBest = false, onApply }: ProductCardPro
   };
 
   return (
-    <Card className={styles.card}>
-      <div className={styles.header}>
+    <Card className={'card'}>
+      <div className={'header'}>
         {/* Product name from API - NOT translated */}
-        <h3 className={styles.name}>{product.name}</h3>
+        <h3 className={'name'}>{product.name}</h3>
         {isBest && (
-          <span className={styles.bestBadge} aria-label={t('products.bestRate')}>
+          <span className={'bestBadge'} aria-label={t('products.bestRate')}>
             {t('products.bestRate')}
           </span>
         )}
       </div>
 
-      <div className={styles.details}>
-        <div className={styles.rate}>
-          <span className={styles.rateLabel}>{t('products.rate')}</span>
-          <span className={styles.rateValue} data-testid="product-rate">
+      <div className={'details'}>
+        <div className={'rate'}>
+          <span className={'rateLabel'}>{t('products.rate')}</span>
+          <span className={'rateValue'} data-testid="product-rate">
             {formatRate(product.bestRate)}
           </span>
         </div>
 
-        <div className={styles.info}>
-          <div className={styles.infoItem}>
-            <span className={styles.infoLabel}>{t('products.term')}</span>
+        <div className={'info'}>
+          <div className={'infoItem'}>
+            <span className={'infoLabel'}>{t('products.term')}</span>
             {/* Term value from API - NOT translated */}
-            <span className={styles.infoValue} data-testid="product-term">
+            <span className={'infoValue'} data-testid="product-term">
               {formatTerm(product.term)}
             </span>
           </div>
 
-          <div className={styles.infoItem}>
-            <span className={styles.infoLabel}>{t('products.type')}</span>
+          <div className={'infoItem'}>
+            <span className={'infoLabel'}>{t('products.type')}</span>
             {/* Type value from API - NOT translated */}
-            <span className={`${styles.infoValue} ${styles.typeBadge}`} data-testid="product-type">
+            <span className={`${'infoValue'} ${'typeBadge'}`} data-testid="product-type">
               {product.type}
             </span>
           </div>

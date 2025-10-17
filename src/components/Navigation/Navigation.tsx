@@ -4,7 +4,7 @@ import { ThemeToggle } from '@/components/ThemeToggle/ThemeToggle';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher/LanguageSwitcher';
 import nestoLogoPrimary from '@/assets/nesto-EN_Primary.png';
 import nestoLogoSecondary from '@/assets/nesto-EN_Secondary.png';
-import styles from './Navigation.module.css';
+import './Navigation.css';
 
 /**
  * Navigation component matching wireframe design
@@ -23,33 +23,25 @@ export function Navigation(): JSX.Element {
   const { t } = useTranslation();
 
   return (
-    <nav className={styles.navigation}>
-      <div className={styles.container}>
+    <nav className={'navigation'}>
+      <div className={'container'}>
         {/* Left: nesto® Logo */}
-        <div className={styles.brand}>
-          <Link href="/" className={styles.logoLink}>
-            <img
-              src={nestoLogoPrimary}
-              alt="nesto"
-              className={`${styles.logo} ${styles.logoLight}`}
-            />
-            <img
-              src={nestoLogoSecondary}
-              alt="nesto"
-              className={`${styles.logo} ${styles.logoDark}`}
-            />
+        <div className={'brand'}>
+          <Link href="/" className={'logoLink'}>
+            <img src={nestoLogoPrimary} alt="nesto" className={`${'logo'} ${'logoLight'}`} />
+            <img src={nestoLogoSecondary} alt="nesto" className={`${'logo'} ${'logoDark'}`} />
           </Link>
         </div>
 
         {/* Center: Empty (spacer for flex layout) */}
-        <div className={styles.spacer} />
+        <div className={'spacer'} />
 
         {/* Right: Applications Link + Controls */}
-        <div className={styles.actions}>
-          <Link href="/applications" className={styles.applicationsLink}>
+        <div className={'actions'}>
+          <Link href="/applications" className={'applicationsLink'}>
             {t('navigation.applications')}
           </Link>
-          <div className={styles.controls}>
+          <div className={'controls'}>
             <LanguageSwitcher />
             <ThemeToggle />
           </div>

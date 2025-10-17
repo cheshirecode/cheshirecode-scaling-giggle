@@ -1,5 +1,5 @@
 import { Component, type ReactNode, type ErrorInfo } from 'react';
-import styles from './ErrorBoundary.module.css';
+import './ErrorBoundary.css';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -74,27 +74,27 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
       }
 
       return (
-        <div className={styles.errorBoundary} role="alert">
-          <div className={styles.container}>
-            <h1 className={styles.title}>⚠️ Something went wrong</h1>
-            <p className={styles.message}>
+        <div className={'errorBoundary'} role="alert">
+          <div className={'container'}>
+            <h1 className={'title'}>⚠️ Something went wrong</h1>
+            <p className={'message'}>
               We're sorry, but something unexpected happened. Please try refreshing the page or
               contact support if the problem persists.
             </p>
 
             {process.env.NODE_ENV === 'development' && (
-              <details className={styles.details}>
-                <summary className={styles.summary}>Error Details (Development Only)</summary>
-                <div className={styles.errorContent}>
+              <details className={'details'}>
+                <summary className={'summary'}>Error Details (Development Only)</summary>
+                <div className={'errorContent'}>
                   <h3>Error:</h3>
-                  <pre className={styles.pre}>{error.toString()}</pre>
+                  <pre className={'pre'}>{error.toString()}</pre>
                   <h3>Stack Trace:</h3>
-                  <pre className={styles.pre}>{errorInfo.componentStack}</pre>
+                  <pre className={'pre'}>{errorInfo.componentStack}</pre>
                 </div>
               </details>
             )}
 
-            <button type="button" className={styles.resetButton} onClick={this.handleReset}>
+            <button type="button" className={'resetButton'} onClick={this.handleReset}>
               Try Again
             </button>
           </div>

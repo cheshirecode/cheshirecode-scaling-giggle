@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { useToast } from '../../hooks/useToast';
 import type { Toast as ToastType } from '../../atoms/toastsAtom';
-import styles from './Toast.module.css';
+import './Toast.css';
 
 /**
  * Individual Toast component
@@ -28,15 +28,15 @@ function Toast({ toast, onClose }: ToastProps): JSX.Element {
   };
 
   return (
-    <div className={`${styles.toast} ${styles[toast.type]}`} role="alert">
-      <span className={styles.icon}>{icons[toast.type]}</span>
-      <div className={styles.content}>
-        {toast.title && <div className={styles.title}>{toast.title}</div>}
-        <div className={styles.message}>{toast.message}</div>
+    <div className={`toast ${toast.type}`} role="alert">
+      <span className="icon">{icons[toast.type]}</span>
+      <div className="content">
+        {toast.title && <div className="title">{toast.title}</div>}
+        <div className="message">{toast.message}</div>
       </div>
       <button
         type="button"
-        className={styles.closeButton}
+        className="close-button"
         onClick={() => onClose(toast.id)}
         aria-label="Close notification"
       >
@@ -86,7 +86,7 @@ export function ToastContainer(): JSX.Element {
   }
 
   return (
-    <div className={styles.toastContainer}>
+    <div className="toast-container">
       {toasts.map((toast) => (
         <Toast key={toast.id} toast={toast} onClose={hideToast} />
       ))}

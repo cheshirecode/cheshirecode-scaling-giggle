@@ -1,7 +1,7 @@
 import { useAtom } from 'jotai';
 import { useCallback } from 'react';
 import { themeAtom, applyTheme, type Theme } from '@/atoms/themeAtom';
-import styles from './ThemeToggle.module.css';
+import './ThemeToggle.css';
 
 /**
  * Theme toggle component for switching between light, dark, and system themes
@@ -29,10 +29,10 @@ export function ThemeToggle(): JSX.Element {
   );
 
   return (
-    <div className={styles.themeToggle} role="group" aria-label="Theme selection">
+    <div className={'themeToggle'} role="group" aria-label="Theme selection">
       <button
         type="button"
-        className={`${styles.themeButton} ${theme === 'light' ? styles.active : ''}`}
+        className={`${'themeButton'} ${theme === 'light' ? 'active' : ''}`}
         onClick={() => handleThemeChange('light')}
         aria-label="Light theme"
         aria-pressed={theme === 'light'}
@@ -42,7 +42,7 @@ export function ThemeToggle(): JSX.Element {
       </button>
       <button
         type="button"
-        className={`${styles.themeButton} ${theme === 'dark' ? styles.active : ''}`}
+        className={`${'themeButton'} ${theme === 'dark' ? 'active' : ''}`}
         onClick={() => handleThemeChange('dark')}
         aria-label="Dark theme"
         aria-pressed={theme === 'dark'}
@@ -52,7 +52,7 @@ export function ThemeToggle(): JSX.Element {
       </button>
       <button
         type="button"
-        className={`${styles.themeButton} ${theme === 'system' ? styles.active : ''}`}
+        className={`${'themeButton'} ${theme === 'system' ? 'active' : ''}`}
         onClick={() => handleThemeChange('system')}
         aria-label="System theme"
         aria-pressed={theme === 'system'}

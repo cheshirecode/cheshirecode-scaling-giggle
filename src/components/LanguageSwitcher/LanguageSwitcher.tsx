@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useCallback } from 'react';
-import styles from './LanguageSwitcher.module.css';
+import './LanguageSwitcher.css';
 
 /**
  * Language switcher component for toggling between English and French
@@ -27,22 +27,22 @@ export function LanguageSwitcher(): JSX.Element {
   );
 
   return (
-    <div className={styles.languageSwitcher} role="group" aria-label="Language selection">
+    <div className={'languageSwitcher'} role="group" aria-label="Language selection">
       <button
         type="button"
-        className={`${styles.languageButton} ${i18n.language === 'en' ? styles.active : ''}`}
+        className={`${'languageButton'} ${i18n.language === 'en' ? 'active' : ''}`}
         onClick={() => handleLanguageChange('en')}
         aria-label="Switch to English"
         aria-pressed={i18n.language === 'en'}
       >
         EN
       </button>
-      <span className={styles.separator} aria-hidden="true">
+      <span className={'separator'} aria-hidden="true">
         |
       </span>
       <button
         type="button"
-        className={`${styles.languageButton} ${i18n.language === 'fr' ? styles.active : ''}`}
+        className={`${'languageButton'} ${i18n.language === 'fr' ? 'active' : ''}`}
         onClick={() => handleLanguageChange('fr')}
         aria-label="Passer au français"
         aria-pressed={i18n.language === 'fr'}

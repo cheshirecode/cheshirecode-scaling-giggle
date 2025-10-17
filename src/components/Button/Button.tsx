@@ -1,5 +1,5 @@
 import type { ButtonHTMLAttributes } from 'react';
-import styles from './Button.module.css';
+import './Button.css';
 
 /**
  * Button component with variants, sizes, and loading states
@@ -37,25 +37,19 @@ export function Button({
   ...props
 }: ButtonProps): JSX.Element {
   const classes = [
-    styles.button,
-    styles[variant],
-    size !== 'medium' && styles[size],
-    fullWidth && styles.fullWidth,
-    loading && styles.loading,
+    'button',
+    variant,
+    size !== 'medium' && size,
+    fullWidth && 'full-width',
+    loading && 'loading',
     className,
   ]
     .filter(Boolean)
     .join(' ');
 
   return (
-    <button
-      className={classes}
-      disabled={disabled ?? loading}
-      aria-busy={loading}
-      {...props}
-    >
+    <button className={classes} disabled={disabled ?? loading} aria-busy={loading} {...props}>
       {children}
     </button>
   );
 }
-

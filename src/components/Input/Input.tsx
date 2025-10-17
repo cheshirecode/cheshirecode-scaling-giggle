@@ -1,5 +1,5 @@
 import type { InputHTMLAttributes } from 'react';
-import styles from './Input.module.css';
+import './Input.css';
 
 /**
  * Input component with label, validation, and accessibility
@@ -44,34 +44,31 @@ export function Input({
   const hasError = Boolean(error);
 
   return (
-    <div className={styles.wrapper}>
+    <div className={'wrapper'}>
       {label && (
-        <label htmlFor={inputId} className={styles.label}>
+        <label htmlFor={inputId} className={'label'}>
           {label}
-          {required && <span className={styles.required}>*</span>}
+          {required && <span className={'required'}>*</span>}
         </label>
       )}
       <input
         id={inputId}
-        className={`${styles.input} ${hasError ? styles.error : ''} ${className ?? ''}`}
+        className={`${'input'} ${hasError ? 'error' : ''} ${className ?? ''}`}
         aria-invalid={hasError}
-        aria-describedby={
-          error ? `${inputId}-error` : helperText ? `${inputId}-helper` : undefined
-        }
+        aria-describedby={error ? `${inputId}-error` : helperText ? `${inputId}-helper` : undefined}
         required={required}
         {...props}
       />
       {error && (
-        <span id={`${inputId}-error`} className={styles.errorMessage} role="alert">
+        <span id={`${inputId}-error`} className={'errorMessage'} role="alert">
           {error}
         </span>
       )}
       {!error && helperText && (
-        <span id={`${inputId}-helper`} className={styles.helperText}>
+        <span id={`${inputId}-helper`} className={'helperText'}>
           {helperText}
         </span>
       )}
     </div>
   );
 }
-
