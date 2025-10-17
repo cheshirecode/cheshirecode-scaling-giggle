@@ -120,15 +120,19 @@ export function ApplicationsListPage(): JSX.Element {
 
                 return (
                   <tr key={application.id}>
-                    <td className="name-cell">
+                    <td className="name-cell" data-label={t('applications.name')}>
                       {applicant.firstName} {applicant.lastName}
                     </td>
-                    <td className="email-cell">{applicant.email}</td>
-                    <td className="phone-cell">{applicant.phone}</td>
-                    <td className="product-cell">
+                    <td className="email-cell" data-label={t('applications.email')}>
+                      {applicant.email}
+                    </td>
+                    <td className="phone-cell" data-label={t('applications.phone')}>
+                      {applicant.phone}
+                    </td>
+                    <td className="product-cell" data-label={t('applications.product')}>
                       {product ? product.name : t('applications.unknownProduct')}
                     </td>
-                    <td className="actions-cell">
+                    <td className="actions-cell" data-label={t('applications.actions')}>
                       <Button
                         variant="secondary"
                         onClick={() => handleEdit(application.id)}
