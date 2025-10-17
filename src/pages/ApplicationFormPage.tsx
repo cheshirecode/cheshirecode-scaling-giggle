@@ -5,12 +5,11 @@ import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 import { Input } from '@/components/Input/Input';
 import { Button } from '@/components/Button/Button';
-import { ProductCard } from '@/components/ProductCard/ProductCard';
 import { Spinner } from '@/components/Spinner/Spinner';
 import { useToast } from '@/hooks/useToast';
 import { fetcher } from '@/services/api';
 import { validateEmail, validatePhone, validateRequired } from '@/utils/validators';
-import { formatPercentage, formatTerm } from '@/utils/formatters';
+import { formatPercentage } from '@/utils/formatters';
 import type { Product, CreateApplication, Application } from '@/types/api';
 import './ApplicationFormPage.css';
 
@@ -183,35 +182,30 @@ export function ApplicationFormPage(): JSX.Element {
   return (
     <div className="page">
       <div className="application-form-container">
-        {/* Left: Product Summary */}
+        {/* Left: Simple Product Summary (matching wireframe) */}
         <aside className="product-summary">
-          <h2 className="section-title">{t('application.selectedProduct')}</h2>
-          <ProductCard
-            product={product}
-            isBest={false}
-            onApply={() => {
-              /* Display only - no action needed */
-            }}
-          />
-          <div className="product-details">
-            <div className="detail-row">
-              <span className="detail-label">{t('products.rate')}:</span>
-              <span className="detail-value">{formatPercentage(product.bestRate)}</span>
+          <div className="product-summary-card">
+            <div className="product-badge">
+              {t('products.bestType', { type: product.type.toLowerCase() })}
             </div>
-            <div className="detail-row">
-              <span className="detail-label">{t('products.term')}:</span>
-              <span className="detail-value">{formatTerm(product.term)}</span>
-            </div>
-            <div className="detail-row">
-              <span className="detail-label">{t('products.lender')}:</span>
-              <span className="detail-value">{product.lenderName}</span>
-            </div>
+            <div className="product-name">{product.name}</div>
+            <div className="product-rate">{formatPercentage(product.bestRate)}</div>
+            <Button
+              variant="secondary"
+              fullWidth
+              onClick={() => {
+                /* Display only - already selected */
+              }}
+              disabled
+            >
+              {t('products.selectProduct')}
+            </Button>
           </div>
         </aside>
 
         {/* Right: Contact Form */}
         <section className="contact-form-section">
-          <h2 className="section-title">{t('application.yourInformation')}</h2>
+          <h2 className="section-title">{t('application.title')}</h2>
           <form
             onSubmit={(e) => {
               void handleSubmit(e);
