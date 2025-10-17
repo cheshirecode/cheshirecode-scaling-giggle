@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRoute, useLocation } from 'wouter';
 import { useTranslation } from 'react-i18next';
 import useSWR from 'swr';
@@ -80,6 +80,19 @@ export default function ApplicationFormPage(): JSX.Element {
     email: false,
     phone: false,
   });
+
+  // Pre-populate form with existing application data when editing
+  useEffect(() => {
+    if (application?.applicants[0]) {
+      const applicant = application.applicants[0];
+      setFormData({
+        firstName: applicant.firstName || '',
+        lastName: applicant.lastName || '',
+        email: applicant.email || '',
+        phone: applicant.phone || '',
+      });
+    }
+  }, [application]);
 
   // Update application mutation (Screen 2 requirement: "update the application with correct data")
   const { trigger, isMutating } = useSWRMutation(

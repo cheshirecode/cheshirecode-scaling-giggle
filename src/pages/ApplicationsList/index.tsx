@@ -54,8 +54,9 @@ export default function ApplicationsListPage(): JSX.Element {
   });
 
   const handleEdit = (applicationId: string): void => {
-    // TODO: Route to edit form per requirements - Screen 3: "when the user selects an application, display the application details with the form to update the application"
-    setLocation(`/applications/${applicationId}`);
+    // Route to edit form per requirements - Screen 3: "when the user selects an application, display the application details with the form to update the application"
+    // Same route as Screen 2 (apply/:applicationId) - reuses the ApplicationFormPage component
+    setLocation(`/apply/${applicationId}`);
   };
 
   // Loading state
