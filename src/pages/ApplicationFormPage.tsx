@@ -205,7 +205,6 @@ export function ApplicationFormPage(): JSX.Element {
 
         {/* Right: Contact Form */}
         <section className="contact-form-section">
-          <h2 className="section-title">{t('application.title')}</h2>
           <form
             onSubmit={(e) => {
               void handleSubmit(e);
@@ -213,6 +212,8 @@ export function ApplicationFormPage(): JSX.Element {
             className="contact-form"
             noValidate
           >
+            <h2 className="form-title">{t('application.title')}</h2>
+
             <Input
               label={t('application.firstName')}
               type="text"
