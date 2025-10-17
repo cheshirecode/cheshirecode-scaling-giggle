@@ -5,9 +5,9 @@
   "installCommand": "npm install --legacy-peer-deps",
   "framework": "vite",
   "outputDirectory": "dist",
-  "functions": {
-    "*.js": {
-      "runtime": "nodejs20.x"
+  "build": {
+    "env": {
+      "NODE_VERSION": "20.19.0"
     }
   }
 }
