@@ -48,7 +48,10 @@
     "productNotFoundDesc": "The product you're looking for doesn't exist.",
     "backToProducts": "Back to Products",
     "applicationCreated": "Application created successfully!",
-    "applicationFailed": "Failed to create application. Please try again."
+    "applicationUpdated": "Application updated successfully!",
+    "applicationFailed": "Failed to save application. Please try again.",
+    "applicationNotFound": "Application not found",
+    "applicationNotFoundDesc": "The application you're looking for doesn't exist."
   },
   "applications": {
     "title": "My Applications",
@@ -60,6 +63,12 @@
     "count": "{{count}} application(s)",
     "type": "Type",
     "id": "ID",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "actions": "Actions",
+    "edit": "Edit {{name}}",
+    "editButton": "Edit",
     "unknownProduct": "Unknown Product",
     "loadError": "Unable to load applications. Please try again later."
   },

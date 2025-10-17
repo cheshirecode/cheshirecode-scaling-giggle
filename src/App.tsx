@@ -12,8 +12,8 @@ import './App.css';
  * Main Application Component
  *
  * Routing structure:
- * - / : HomePage (Screen 1) - Products selection
- * - /apply/:productId : ApplicationFormPage (Screen 2) - Contact information form
+ * - / : HomePage (Screen 1) - Products selection → CREATE application
+ * - /apply/:applicationId : ApplicationFormPage (Screen 2) - Contact information form → UPDATE application
  * - /applications : ApplicationsListPage (Screen 3) - List of applications
  * - * : NotFoundPage - 404 handler
  */
@@ -29,7 +29,7 @@ function App(): JSX.Element {
         <main className="main">
           <Switch>
             <Route path="/">{() => <HomePage />}</Route>
-            <Route path="/apply/:productId" component={ApplicationFormPage} />
+            <Route path="/apply/:applicationId" component={ApplicationFormPage} />
             <Route path="/applications" component={ApplicationsListPage} />
             <Route component={NotFoundPage} />
           </Switch>

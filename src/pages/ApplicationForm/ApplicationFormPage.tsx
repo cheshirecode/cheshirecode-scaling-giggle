@@ -10,7 +10,7 @@ import { useToast } from '@/hooks/useToast';
 import { fetcher } from '@/services/api';
 import { validateEmail, validatePhone, validateRequired } from '@/utils/validators';
 import { formatPercentage } from '@/utils/formatters';
-import type { Product, CreateApplication, Application } from '@/types/api';
+import type { Product, Application } from '@/types/api';
 import './ApplicationFormPage.css';
 
 interface FormData {
@@ -36,7 +36,10 @@ interface FormTouched {
 
 /**
  * Application Form Page - Screen 2
- * Route: /apply/:productId
+ * Route: /apply/:applicationId
+ *
+ * Per README requirements:
+ * "At this point, application has already been created, now the user needs to be able to update the application with their contact information"
  *
  * Layout per wireframe:
  * - Left: Product summary card
@@ -45,17 +48,23 @@ interface FormTouched {
  */
 export function ApplicationFormPage(): JSX.Element {
   const { t } = useTranslation();
-  const [, params] = useRoute<{ productId?: string }>('/apply/:productId');
+  const [, params] = useRoute<{ applicationId?: string }>('/apply/:applicationId');
   const [, setLocation] = useLocation();
   const { showToast } = useToast();
 
-  const productId = params?.productId ? parseInt(params.productId, 10) : undefined;
+  const applicationId = params?.applicationId;
 
-  // Fetch all products from /api/products
-  const { data: products, isLoading: isLoadingProduct } = useSWR<Product[]>('/products', fetcher);
-  const productError = !products && !isLoadingProduct;
+  // Fetch the existing application (created on Screen 1)
+  const { data: application, isLoading: isLoadingApp } = useSWR<Application>(
+    applicationId ? `/applications/${applicationId}` : null,
+    fetcher
+  );
 
-  const product = products?.find((p) => p.id === productId);
+  // Fetch all products to display product details
+  const { data: products, isLoading: isLoadingProducts } = useSWR<Product[]>('/products', fetcher);
+
+  const isLoading = isLoadingApp || isLoadingProducts;
+  const product = products?.find((p) => p.id === application?.productId);
 
   // Form state
   const [formData, setFormData] = useState<FormData>({
@@ -72,12 +81,21 @@ export function ApplicationFormPage(): JSX.Element {
     phone: false,
   });
 
-  // Create application mutation
+  // Update application mutation (Screen 2 requirement: "update the application with correct data")
   const { trigger, isMutating } = useSWRMutation(
-    '/applications',
-    async (url: string, { arg }: { arg: CreateApplication }) => {
+    applicationId ? `/applications/${applicationId}` : null,
+    async (
+      url: string,
+      {
+        arg,
+      }: {
+        arg: {
+          applicants: { firstName: string; lastName: string; email: string; phone: string }[];
+        };
+      }
+    ) => {
       return fetcher<Application>(url, {
-        method: 'POST',
+        method: 'PUT',
         body: JSON.stringify(arg),
       });
     }
@@ -133,13 +151,12 @@ export function ApplicationFormPage(): JSX.Element {
       phone: true,
     });
 
-    if (!isFormValid || !productId) {
+    if (!isFormValid || !applicationId) {
       return;
     }
 
-    // Submit application with contact information
-    trigger({
-      productId,
+    // Update application with contact information (Screen 2 requirement)
+    const payload = {
       applicants: [
         {
           firstName: formData.firstName.trim(),
@@ -148,17 +165,22 @@ export function ApplicationFormPage(): JSX.Element {
           phone: formData.phone.trim(),
         },
       ],
-    })
-      .then(() => {
+    };
+
+    console.log('[ApplicationForm] Updating application:', applicationId, payload);
+
+    trigger(payload)
+      .then((response) => {
+        console.log('[ApplicationForm] Application updated successfully:', response);
         showToast({
           type: 'success',
-          message: t('application.applicationCreated'),
+          message: t('application.applicationUpdated'),
         });
         setLocation('/applications');
         return undefined;
       })
       .catch((err: unknown) => {
-        console.error('Application submission failed:', err);
+        console.error('[ApplicationForm] Application update failed:', err);
         showToast({
           type: 'error',
           message: t('application.applicationFailed'),
@@ -167,7 +189,7 @@ export function ApplicationFormPage(): JSX.Element {
   };
 
   // Loading state
-  if (isLoadingProduct) {
+  if (isLoading) {
     return (
       <div className="page page-center" role="status" aria-live="polite" aria-busy="true">
         <Spinner size="large" />
@@ -176,12 +198,12 @@ export function ApplicationFormPage(): JSX.Element {
   }
 
   // Error states
-  if (productError || !product) {
+  if (!application || !product) {
     return (
       <div className="page page-center" role="alert" aria-live="assertive">
         <div className="error-message">
-          <h2>{t('application.productNotFound')}</h2>
-          <p>{t('application.productNotFoundDesc')}</p>
+          <h2>{t('application.applicationNotFound')}</h2>
+          <p>{t('application.applicationNotFoundDesc')}</p>
           <Button variant="primary" onClick={() => setLocation('/')}>
             {t('application.backToProducts')}
           </Button>

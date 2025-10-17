@@ -45,6 +45,12 @@ export async function fetcher<T>(url: string, init?: RequestInit): Promise<T> {
   const timeout = setTimeout(() => controller.abort(), 25000);
 
   try {
+    // Log request details for debugging
+    console.log(`[API] ${init?.method ?? 'GET'} ${fullUrl}`, {
+      headers: { ...DEFAULT_HEADERS, ...(init?.headers ?? {}) },
+      body: init?.body,
+    });
+
     const response = await fetch(fullUrl, {
       ...init,
       signal: controller.signal,
@@ -58,10 +64,13 @@ export async function fetcher<T>(url: string, init?: RequestInit): Promise<T> {
 
     if (!response.ok) {
       const text = await response.text().catch(() => '');
+      console.error(`[API] Request failed: ${response.status} ${response.statusText}`, text);
       throw new ApiError(response.status, text || response.statusText);
     }
 
-    return (await response.json()) as T;
+    const data = (await response.json()) as T;
+    console.log(`[API] Response:`, data);
+    return data;
   } catch (error) {
     clearTimeout(timeout);
 

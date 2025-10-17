@@ -48,7 +48,10 @@
     "productNotFoundDesc": "Le produit que vous recherchez n'existe pas.",
     "backToProducts": "Retour aux produits",
     "applicationCreated": "Demande créée avec succès!",
-    "applicationFailed": "Échec de la création de la demande. Veuillez réessayer."
+    "applicationUpdated": "Demande mise à jour avec succès!",
+    "applicationFailed": "Échec de l'enregistrement de la demande. Veuillez réessayer.",
+    "applicationNotFound": "Demande non trouvée",
+    "applicationNotFoundDesc": "La demande que vous recherchez n'existe pas."
   },
   "applications": {
     "title": "Mes demandes",
@@ -60,6 +63,12 @@
     "count": "{{count}} demande(s)",
     "type": "Type",
     "id": "ID",
+    "name": "Nom",
+    "email": "Courriel",
+    "phone": "Téléphone",
+    "actions": "Actions",
+    "edit": "Modifier {{name}}",
+    "editButton": "Modifier",
     "unknownProduct": "Produit inconnu",
     "loadError": "Impossible de charger les demandes. Veuillez réessayer plus tard."
   },

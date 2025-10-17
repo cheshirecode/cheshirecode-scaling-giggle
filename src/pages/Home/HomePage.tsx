@@ -1,12 +1,14 @@
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'wouter';
 import useSWR from 'swr';
+import useSWRMutation from 'swr/mutation';
 import { ProductCard } from '@/components/ProductCard/ProductCard';
 import { Spinner } from '@/components/Spinner/Spinner';
+import { useToast } from '@/hooks/useToast';
 import { fetcher } from '@/services/api';
 import { findBestProductByType } from '@/utils/products';
 import { DEFAULT_PRODUCT_TYPES_TO_DISPLAY } from '@/utils/constants';
-import type { Product, ProductType } from '@/types/api';
+import type { Product, ProductType, Application, CreateApplication } from '@/types/api';
 
 interface HomePageProps {
   /** Product types to display (defaults to FIXED + VARIABLE per wireframe) */
@@ -29,17 +31,47 @@ export function HomePage({
 }: HomePageProps = {}): JSX.Element {
   const { t } = useTranslation();
   const [, setLocation] = useLocation();
+  const { showToast } = useToast();
+
   const { data, error, isLoading } = useSWR<Product[], Error>('/products', (url: string) =>
     fetcher<Product[]>(url)
   );
 
+  // Create application mutation (Screen 1 requirement)
+  const { trigger: createApplication, isMutating } = useSWRMutation(
+    '/applications',
+    async (url: string, { arg }: { arg: CreateApplication }) => {
+      return fetcher<Application>(url, {
+        method: 'POST',
+        body: JSON.stringify(arg),
+      });
+    }
+  );
+
   const handleApply = (productId: number): void => {
-    // TODO: Per requirements, should CREATE application first, then route to /apply/:applicationId
-    // Currently just routing to product selection form
-    setLocation(`/apply/${productId}`);
+    // Per Screen 1 requirements: "when the user selects a product, create a new application, and then route the user to the next screen"
+    console.log('[HomePage] Creating application for productId:', productId);
+
+    void createApplication({ productId })
+      .then((newApplication) => {
+        console.log('[HomePage] Application created:', newApplication);
+        showToast({
+          type: 'success',
+          message: t('application.applicationCreated'),
+        });
+        // Route to Screen 2 with the application ID
+        setLocation(`/apply/${newApplication.id}`);
+      })
+      .catch((err: unknown) => {
+        console.error('[HomePage] Application creation failed:', err);
+        showToast({
+          type: 'error',
+          message: t('application.applicationFailed'),
+        });
+      });
   };
 
-  if (isLoading) {
+  if (isLoading || isMutating) {
     return (
       <div className="page page-center">
         <Spinner size="large" />
