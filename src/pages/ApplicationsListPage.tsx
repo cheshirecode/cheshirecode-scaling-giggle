@@ -50,7 +50,7 @@ export function ApplicationsListPage(): JSX.Element {
   // Loading state
   if (isLoading) {
     return (
-      <div className="page page-center">
+      <div className="page page-center" role="status" aria-live="polite" aria-busy="true">
         <Spinner size="large" />
       </div>
     );
@@ -59,7 +59,7 @@ export function ApplicationsListPage(): JSX.Element {
   // Error state
   if (hasError) {
     return (
-      <div className="page page-center">
+      <div className="page page-center" role="alert" aria-live="assertive">
         <div className="error-message">
           <h2>{t('common.error')}</h2>
           <p>{t('applications.loadError')}</p>
@@ -85,18 +85,18 @@ export function ApplicationsListPage(): JSX.Element {
       <div className="applications-container">
         <header className="applications-header">
           <h1>{t('applications.title')}</h1>
-          <p className="applications-count">
+          <p className="applications-count" aria-live="polite">
             {t('applications.count', { count: applications.length })}
           </p>
         </header>
 
-        <div className="applications-list">
+        <div className="applications-list" role="list">
           {applications.map((application) => {
             const product = findProduct(application.productId);
             const applicant = application.applicants[0];
 
             return (
-              <Card key={application.id} className="application-card">
+              <Card key={application.id} className="application-card" role="listitem">
                 <div className="application-content">
                   {/* Left: Product Info */}
                   <div className="application-product">

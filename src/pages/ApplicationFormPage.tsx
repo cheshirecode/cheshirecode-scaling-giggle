@@ -151,7 +151,6 @@ export function ApplicationFormPage(): JSX.Element {
         return undefined;
       })
       .catch((err: unknown) => {
-         
         console.error('Application submission failed:', err);
         showToast({
           type: 'error',
@@ -163,7 +162,7 @@ export function ApplicationFormPage(): JSX.Element {
   // Loading state
   if (isLoadingProduct) {
     return (
-      <div className="page page-center">
+      <div className="page page-center" role="status" aria-live="polite" aria-busy="true">
         <Spinner size="large" />
       </div>
     );
@@ -172,7 +171,7 @@ export function ApplicationFormPage(): JSX.Element {
   // Error states
   if (productError || !product) {
     return (
-      <div className="page page-center">
+      <div className="page page-center" role="alert" aria-live="assertive">
         <div className="error-message">
           <h2>{t('application.productNotFound')}</h2>
           <p>{t('application.productNotFoundDesc')}</p>
