@@ -54,9 +54,12 @@
   flex: 1;
 }
 
-/* Right: Applications Link */
+/* Right: Applications Link + Controls */
 .actions {
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
 }
 
 .applicationsLink {
@@ -80,6 +83,12 @@
 
 .applicationsLink:active {
   transform: scale(0.98);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
 }
 
 /* Responsive: Mobile */
