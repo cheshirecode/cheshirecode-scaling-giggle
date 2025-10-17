@@ -26,7 +26,7 @@ if [ "$VENDOR_REACT_COUNT" -eq 1 ]; then
 elif [ "$INDEX_COUNT" -eq 1 ]; then
   echo "✅ Single unified bundle detected (default chunking)"
   BUNDLING="unified"
-  
+
   # Verify React is in the bundle
   if grep -q "react" dist/assets/index-*.js 2>/dev/null; then
     echo "✅ React included in unified bundle"
@@ -49,11 +49,11 @@ if [ "$BUNDLING" = "manual" ]; then
     echo "❌ ERROR: State management bundle not found!"
     exit 1
   fi
-  
+
   if ls dist/assets/vendor-data*.js 1> /dev/null 2>&1; then
     echo "✅ Data fetching bundle (swr) included"
   fi
-  
+
   if ls dist/assets/vendor-routing*.js 1> /dev/null 2>&1; then
     echo "✅ Routing bundle (wouter) included"
   fi
