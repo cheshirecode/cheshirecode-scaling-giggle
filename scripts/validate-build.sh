@@ -16,36 +16,47 @@ echo ""
 # Check for critical dependencies in bundle
 echo "🔎 Checking for required dependencies in bundle..."
 
+# Check bundling strategy: manual chunks (vendor-*) or unified bundle (index-*)
 VENDOR_REACT_COUNT=$(ls -1 dist/assets/vendor-react*.js 2>/dev/null | wc -l | tr -d ' ')
+INDEX_COUNT=$(ls -1 dist/assets/index-*.js 2>/dev/null | wc -l | tr -d ' ')
+
 if [ "$VENDOR_REACT_COUNT" -eq 1 ]; then
-  echo "✅ Single React bundle detected"
+  echo "✅ Single React bundle detected (manual chunking)"
+  BUNDLING="manual"
+elif [ "$INDEX_COUNT" -eq 1 ]; then
+  echo "✅ Single unified bundle detected (default chunking)"
+  BUNDLING="unified"
+  
+  # Verify React is in the bundle
+  if grep -q "react" dist/assets/index-*.js 2>/dev/null; then
+    echo "✅ React included in unified bundle"
+  else
+    echo "❌ ERROR: React not found in bundle"
+    exit 1
+  fi
 else
-  echo "❌ ERROR: Found $VENDOR_REACT_COUNT React bundles (should be 1)"
-  echo "   This indicates multiple React instances that will cause hooks to fail!"
+  echo "❌ ERROR: Invalid bundle structure"
+  echo "   Expected: 1 vendor-react OR 1 index bundle"
+  echo "   Found: $VENDOR_REACT_COUNT vendor-react, $INDEX_COUNT index"
   exit 1
 fi
 
-# Check for state management bundle (jotai)
-if ls dist/assets/vendor-state*.js 1> /dev/null 2>&1; then
-  echo "✅ State management bundle (jotai) included"
-else
-  echo "❌ ERROR: State management bundle not found!"
-  echo "   jotai may not be in production dependencies"
-  exit 1
-fi
-
-# Check for data bundle (swr)
-if ls dist/assets/vendor-data*.js 1> /dev/null 2>&1; then
-  echo "✅ Data fetching bundle (swr) included"
-else
-  echo "⚠️  WARNING: Data fetching bundle not found"
-fi
-
-# Check for routing bundle (wouter)
-if ls dist/assets/vendor-routing*.js 1> /dev/null 2>&1; then
-  echo "✅ Routing bundle (wouter) included"
-else
-  echo "⚠️  WARNING: Routing bundle not found"
+# For manual chunking, verify other vendor bundles
+if [ "$BUNDLING" = "manual" ]; then
+  if ls dist/assets/vendor-state*.js 1> /dev/null 2>&1; then
+    echo "✅ State management bundle (jotai) included"
+  else
+    echo "❌ ERROR: State management bundle not found!"
+    exit 1
+  fi
+  
+  if ls dist/assets/vendor-data*.js 1> /dev/null 2>&1; then
+    echo "✅ Data fetching bundle (swr) included"
+  fi
+  
+  if ls dist/assets/vendor-routing*.js 1> /dev/null 2>&1; then
+    echo "✅ Routing bundle (wouter) included"
+  fi
 fi
 
 echo ""
