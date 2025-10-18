@@ -4,7 +4,7 @@
 
 ### Main Application
 
-**Production URL**: https://cheshirecode-challenge-nesto-fronte.vercel.app/
+**Production URL**: https://cheshirecode-challenge-nesto-fronte.vercel.app
 
 **Status**: ✅ Successfully deployed to Vercel
 **Build Time**: ~3-5 seconds
