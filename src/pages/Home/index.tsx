@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocation } from 'wouter';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
-import { ProductCard } from '@/components/ProductCard/ProductCard';
+import { BestProductCard } from '@/components/BestProductCard/BestProductCard';
 import { Spinner } from '@/components/Spinner/Spinner';
 import { useToast } from '@/hooks/useToast';
 import { fetcher } from '@/services/api';
@@ -112,7 +112,12 @@ export default function HomePage({
     <div className="page">
       <div className="products-grid">
         {bestProducts.map((product) => (
-          <ProductCard key={product.id} product={product} isBest onApply={handleApply} />
+          <BestProductCard
+            key={product.id}
+            product={product}
+            isApplying={isMutating}
+            onSelect={handleApply}
+          />
         ))}
       </div>
     </div>
