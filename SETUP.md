@@ -4,7 +4,7 @@
 
 ### Main Application
 
-**Production URL**: https://cheshirecode-challenge-nesto-frontend-h2q7qcch9.vercel.app
+**Production URL**: https://cheshirecode-challenge-nesto-fronte.vercel.app/
 
 **Status**: ✅ Successfully deployed to Vercel
 **Build Time**: ~3-5 seconds
@@ -13,7 +13,7 @@
 
 ### Storybook Documentation
 
-**Production URL**: https://storybook-static-bfi8xgicf-dac4158s-projects.vercel.app
+**Production URL**: https://storybook-static-lyart.vercel.app
 
 **Status**: ✅ Successfully deployed with routing fix
 **Build Time**: ~3 seconds
