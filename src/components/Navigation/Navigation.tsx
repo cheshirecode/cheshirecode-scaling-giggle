@@ -2,15 +2,15 @@ import { Link } from 'wouter';
 import { useTranslation } from 'react-i18next';
 import { ThemeToggle } from '@/components/ThemeToggle/ThemeToggle';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher/LanguageSwitcher';
-import nestoLogoPrimary from '@/assets/nesto-EN_Primary.png';
-import nestoLogoSecondary from '@/assets/nesto-EN_Secondary.png';
+import logoLight from '@/assets/logo-light.svg';
+import logoDark from '@/assets/logo-dark.svg';
 import './Navigation.css';
 
 /**
- * Navigation component matching wireframe design
+ * Navigation component with custom branding
  *
- * Layout per wireframe:
- * - Left: nesto® logo image (theme-aware: Primary for light, Secondary for dark)
+ * Layout:
+ * - Left: Mortgage logo (theme-aware: light/dark variants)
  * - Center: Empty
  * - Right: "Applications" link + Language/Theme controls
  *
@@ -25,11 +25,11 @@ export function Navigation(): JSX.Element {
   return (
     <nav className={'navigation'}>
       <div className={'container'}>
-        {/* Left: nesto® Logo */}
+        {/* Left: Logo */}
         <div className={'brand'}>
           <Link href="/" className={'logoLink'}>
-            <img src={nestoLogoPrimary} alt="nesto" className={`${'logo'} ${'logoLight'}`} />
-            <img src={nestoLogoSecondary} alt="nesto" className={`${'logo'} ${'logoDark'}`} />
+            <img src={logoLight} alt="Mortgage App" className={`${'logo'} ${'logoLight'}`} />
+            <img src={logoDark} alt="Mortgage App" className={`${'logo'} ${'logoDark'}`} />
           </Link>
         </div>
 
