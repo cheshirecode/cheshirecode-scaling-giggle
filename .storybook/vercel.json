@@ -1,0 +1,57 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "routes": [
+    {
+      "src": "/iframe.html",
+      "dest": "/iframe.html"
+    },
+    {
+      "src": "/index.json",
+      "dest": "/index.json"
+    },
+    {
+      "src": "/project.json",
+      "dest": "/project.json"
+    },
+    {
+      "src": "/(.*\\.json)",
+      "dest": "/$1"
+    },
+    {
+      "src": "/(.*\\.js)",
+      "dest": "/$1"
+    },
+    {
+      "src": "/(.*\\.css)",
+      "dest": "/$1"
+    },
+    {
+      "src": "/(.*\\.(svg|png|jpg|jpeg|gif|ico|woff|woff2|ttf|eot))",
+      "dest": "/$1"
+    },
+    {
+      "src": "/sb-addons/(.*)",
+      "dest": "/sb-addons/$1"
+    },
+    {
+      "src": "/sb-manager/(.*)",
+      "dest": "/sb-manager/$1"
+    },
+    {
+      "src": "/sb-common-assets/(.*)",
+      "dest": "/sb-common-assets/$1"
+    },
+    {
+      "src": "/addon-visual-tests-assets/(.*)",
+      "dest": "/addon-visual-tests-assets/$1"
+    },
+    {
+      "src": "/assets/(.*)",
+      "dest": "/assets/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}
