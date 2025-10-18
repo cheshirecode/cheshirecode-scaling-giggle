@@ -65,6 +65,15 @@
   --space-2xl: var(--spacing-10); /* 40px */
   --space-3xl: var(--spacing-12); /* 48px */
 
+  /* Additional aliases for consistency */
+  --spacing-xs: var(--spacing-1);
+  --spacing-sm: var(--spacing-2);
+  --spacing-md: var(--spacing-4);
+  --spacing-lg: var(--spacing-6);
+  --spacing-xl: var(--spacing-8);
+  --spacing-2xl: var(--spacing-10);
+  --spacing-3xl: var(--spacing-12);
+
   /* Typography - Modern Web Fonts */
   /* Inter for body text - clean, legible, professional */
   --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
