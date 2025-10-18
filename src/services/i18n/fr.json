@@ -76,5 +76,14 @@
     "required": "Ce champ est requis",
     "invalidEmail": "Veuillez entrer une adresse courriel valide",
     "invalidPhone": "Veuillez entrer un numéro de téléphone valide"
+  },
+  "theme": {
+    "label": "Thème",
+    "light": "Clair",
+    "lightDesc": "Toujours utiliser le thème clair",
+    "dark": "Sombre",
+    "darkDesc": "Toujours utiliser le thème sombre",
+    "system": "Système",
+    "systemDesc": "Suivre les préférences du système"
   }
 }

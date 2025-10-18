@@ -1,3 +1,21 @@
+/* Skip to content link for keyboard navigation accessibility */
+.skip-to-content {
+  position: absolute;
+  left: -9999px;
+  z-index: 999;
+  padding: var(--spacing-3) var(--spacing-4);
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+}
+
+.skip-to-content:focus {
+  left: var(--spacing-4);
+  top: var(--spacing-4);
+}
+
 .app {
   min-height: 100vh;
   display: flex;

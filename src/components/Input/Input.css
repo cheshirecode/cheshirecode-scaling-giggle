@@ -26,6 +26,7 @@
 .input {
   width: 100%;
   padding: var(--spacing-3) var(--spacing-4);
+  min-height: 44px; /* Accessibility: minimum touch target size */
   font-family: var(--font-family-base);
   font-size: var(--font-size-base);
   line-height: var(--line-height-base);
@@ -36,6 +37,9 @@
   transition:
     border-color 0.2s ease,
     box-shadow 0.2s ease;
+  -webkit-appearance: none; /* Remove iOS default styling */
+  appearance: none;
+  -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
 }
 
 .input::placeholder {
@@ -84,4 +88,11 @@
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
   line-height: var(--line-height-tight);
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .input {
+    font-size: 16px; /* Prevent iOS zoom on focus */
+  }
 }

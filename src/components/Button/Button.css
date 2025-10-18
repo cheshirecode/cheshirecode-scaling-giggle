@@ -9,6 +9,7 @@
   justify-content: center;
   gap: var(--spacing-2);
   padding: var(--spacing-3) var(--spacing-4);
+  min-height: 44px; /* Accessibility: minimum touch target size */
   font-family: var(--font-family-base);
   font-size: var(--font-size-base);
   font-weight: 500;
@@ -20,8 +21,11 @@
     background-color 0.2s ease,
     color 0.2s ease,
     border-color 0.2s ease,
-    opacity 0.2s ease;
+    opacity 0.2s ease,
+    transform 0.1s ease;
   white-space: nowrap;
+  -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
+  touch-action: manipulation; /* Improve touch responsiveness */
 }
 
 .button:disabled {
@@ -46,6 +50,7 @@
 
 .primary:active:not(:disabled) {
   background-color: var(--color-primary-darker);
+  transform: scale(0.98); /* Micro-interaction: press feedback */
 }
 
 .secondary {
@@ -61,6 +66,7 @@
 
 .secondary:active:not(:disabled) {
   background-color: var(--color-surface-active);
+  transform: scale(0.98); /* Micro-interaction: press feedback */
 }
 
 .ghost {
@@ -74,6 +80,7 @@
 
 .ghost:active:not(:disabled) {
   background-color: var(--color-surface-active);
+  transform: scale(0.98); /* Micro-interaction: press feedback */
 }
 
 /* Sizes */

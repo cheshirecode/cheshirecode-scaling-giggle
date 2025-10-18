@@ -23,10 +23,13 @@ function App(): JSX.Element {
 
   return (
     <ErrorBoundary>
+      <a href="#main-content" className="skip-to-content">
+        Skip to main content
+      </a>
       <div className="app">
         <Navigation />
 
-        <main className="main">
+        <main id="main-content" className="main" tabIndex={-1}>
           <Switch>
             <Route path="/">{() => <HomePage />}</Route>
             <Route path="/apply/:applicationId" component={ApplicationFormPage} />
