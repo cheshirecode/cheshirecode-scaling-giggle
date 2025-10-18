@@ -13,10 +13,13 @@
 
 ### Storybook Documentation
 
-**Project**: Built and deployed as separate static site
-**Build Time**: ~4 seconds
+**Production URL**: https://storybook-static-bfi8xgicf-dac4158s-projects.vercel.app
 
-> **Note**: Each deployment gets a unique hash in the URL. Check Vercel dashboard for deployment history.
+**Status**: ✅ Successfully deployed with routing fix
+**Build Time**: ~3 seconds
+**Bundle Size**: ~2.6 MB (static documentation site)
+
+> **Note**: Each deployment gets a unique hash in the URL. Storybook includes vercel.json with proper iframe routing configuration.
 
 ---
 
