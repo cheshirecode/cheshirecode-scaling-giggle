@@ -19,45 +19,25 @@ describe('ThemeToggle', () => {
     vi.clearAllMocks();
   });
 
-  it('renders all three theme buttons', () => {
+  it('renders dropdown toggle button with current theme', () => {
     render(
       <Provider>
         <ThemeToggle />
       </Provider>
     );
 
-    expect(screen.getByLabelText('Light theme')).toBeInTheDocument();
-    expect(screen.getByLabelText('Dark theme')).toBeInTheDocument();
-    expect(screen.getByLabelText('System theme')).toBeInTheDocument();
+    // Check for the toggle button with theme.label aria-label
+    const toggleButton = screen.getByRole('button', { expanded: false });
+    expect(toggleButton).toBeInTheDocument();
+    expect(toggleButton).toHaveAttribute('aria-haspopup', 'true');
+    expect(toggleButton).toHaveAttribute('aria-label', 'theme.label');
+
+    // Default theme is 'system', should show system icon and label
+    expect(toggleButton).toHaveTextContent('💻');
+    expect(toggleButton).toHaveTextContent('theme.system');
   });
 
-  it('has accessible group label', () => {
-    render(
-      <Provider>
-        <ThemeToggle />
-      </Provider>
-    );
-
-    const group = screen.getByRole('group', { name: 'Theme selection' });
-    expect(group).toBeInTheDocument();
-  });
-
-  it('shows aria-pressed state for active theme', () => {
-    render(
-      <Provider>
-        <ThemeToggle />
-      </Provider>
-    );
-
-    // Default theme is 'system'
-    const systemButton = screen.getByLabelText('System theme');
-    expect(systemButton).toHaveAttribute('aria-pressed', 'true');
-
-    const lightButton = screen.getByLabelText('Light theme');
-    expect(lightButton).toHaveAttribute('aria-pressed', 'false');
-  });
-
-  it('calls applyTheme when theme button is clicked', async () => {
+  it('opens dropdown when toggle button is clicked', async () => {
     const user = userEvent.setup();
 
     render(
@@ -66,13 +46,76 @@ describe('ThemeToggle', () => {
       </Provider>
     );
 
-    const lightButton = screen.getByLabelText('Light theme');
-    await user.click(lightButton);
+    const toggleButton = screen.getByRole('button', { expanded: false });
+    await user.click(toggleButton);
+
+    // Dropdown should now be visible with menu role
+    const menu = screen.getByRole('menu');
+    expect(menu).toBeInTheDocument();
+
+    // All three options should be visible
+    const menuItems = screen.getAllByRole('menuitem');
+    expect(menuItems).toHaveLength(3);
+  });
+
+  it('displays all theme options in dropdown with icons and descriptions', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <Provider>
+        <ThemeToggle />
+      </Provider>
+    );
+
+    const toggleButton = screen.getByRole('button');
+    await user.click(toggleButton);
+
+    // Check for system option (should be first and active)
+    const systemOption = screen.getByRole('menuitem', {
+      name: /theme\.system.*theme\.systemDesc/,
+    });
+    expect(systemOption).toBeInTheDocument();
+    expect(systemOption).toHaveTextContent('💻');
+    expect(systemOption).toHaveClass('active');
+
+    // Check for light option
+    const lightOption = screen.getByRole('menuitem', {
+      name: /theme\.light.*theme\.lightDesc/,
+    });
+    expect(lightOption).toBeInTheDocument();
+    expect(lightOption).toHaveTextContent('☀️');
+
+    // Check for dark option
+    const darkOption = screen.getByRole('menuitem', {
+      name: /theme\.dark.*theme\.darkDesc/,
+    });
+    expect(darkOption).toBeInTheDocument();
+    expect(darkOption).toHaveTextContent('🌙');
+  });
+
+  it('calls applyTheme when theme option is selected', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <Provider>
+        <ThemeToggle />
+      </Provider>
+    );
+
+    // Open dropdown
+    const toggleButton = screen.getByRole('button');
+    await user.click(toggleButton);
+
+    // Click light theme option
+    const lightOption = screen.getByRole('menuitem', {
+      name: /theme\.light/,
+    });
+    await user.click(lightOption);
 
     expect(themeAtomModule.applyTheme).toHaveBeenCalledWith('light');
   });
 
-  it('updates active state when theme changes', async () => {
+  it('closes dropdown after selecting a theme', async () => {
     const user = userEvent.setup();
 
     render(
@@ -81,13 +124,19 @@ describe('ThemeToggle', () => {
       </Provider>
     );
 
-    const darkButton = screen.getByLabelText('Dark theme');
-    await user.click(darkButton);
+    // Open dropdown
+    const toggleButton = screen.getByRole('button');
+    await user.click(toggleButton);
 
-    expect(darkButton).toHaveAttribute('aria-pressed', 'true');
+    // Select an option
+    const darkOption = screen.getByRole('menuitem', { name: /theme\.dark/ });
+    await user.click(darkOption);
+
+    // Dropdown should be closed
+    expect(screen.queryByRole('menu')).not.toBeInTheDocument();
   });
 
-  it('has keyboard navigation support', async () => {
+  it('closes dropdown when Escape key is pressed', async () => {
     const user = userEvent.setup();
 
     render(
@@ -96,11 +145,16 @@ describe('ThemeToggle', () => {
       </Provider>
     );
 
-    const lightButton = screen.getByLabelText('Light theme');
-    lightButton.focus();
+    // Open dropdown
+    const toggleButton = screen.getByRole('button');
+    await user.click(toggleButton);
 
-    await user.keyboard('{Enter}');
+    expect(screen.getByRole('menu')).toBeInTheDocument();
 
-    expect(themeAtomModule.applyTheme).toHaveBeenCalledWith('light');
+    // Press Escape
+    await user.keyboard('{Escape}');
+
+    // Dropdown should be closed
+    expect(screen.queryByRole('menu')).not.toBeInTheDocument();
   });
 });

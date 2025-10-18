@@ -4,26 +4,19 @@
 
 ### Main Application
 
-**Production URL**: https://cheshirecode-challenge-nesto-frontend-app-dac4158s-projects.vercel.app
+**Production URL**: https://cheshirecode-challenge-nesto-frontend-dh7f89vgs.vercel.app
 
 **Status**: ✅ Successfully deployed to Vercel
-**Build Time**: ~14 seconds
-**Bundle Size**: 45.40 kB gzipped (React: 141.72 KB raw)
+**Build Time**: ~3-5 seconds
+**Bundle Size**: 68.64 KB total (with vendor chunks)
+**Node Version**: >=20.19.0
 
 ### Storybook Documentation
 
-**Production URL**: https://cheshirecode-challenge-nesto-frontend-sb-dac4158s-projects.vercel.app
-
-**Status**: ✅ Deployed as separate project
+**Project**: Built and deployed as separate static site
 **Build Time**: ~4 seconds
-**Bundle Size**: ~1.8 MB (static docs)
 
-**📖 Full Deployment Guide**: See [DEPLOYMENT.md](./DEPLOYMENT.md) for:
-
-- Manual deployment workflow (commit → push → deploy)
-- Separate deployment process for Storybook
-- Environment variable management
-- Troubleshooting tips
+> **Note**: Each deployment gets a unique hash in the URL. Check Vercel dashboard for deployment history.
 
 ---
 
@@ -448,75 +441,136 @@ git commit -m "a11y(button): add aria-busy for loading state"
 
 ## Deployment (Vercel)
 
+### Current Setup
+
+This project uses **manual deployment** via Vercel CLI because the Git repository is hosted on CodeSubmit (Vercel automatic deployments only support GitHub, GitLab, and Bitbucket).
+
 ### Prerequisites
 
 - Vercel account (free tier works)
-- GitHub repository (or GitLab/Bitbucket)
+- Vercel CLI installed: `npm install -g vercel`
 
-### Option 1: Via Vercel Dashboard (Recommended for First Deploy)
+### Deployment Workflow
 
-1. **Push to GitHub**:
+#### 1. Commit and Push Changes
 
-   ```bash
-   git push origin master
-   ```
+```bash
+git add .
+git commit -m "feat: your change"
+git push origin master
+```
 
-2. **Import to Vercel**:
-   - Go to [vercel.com/new](https://vercel.com/new)
-   - Click "Import Project"
-   - Select your repository
-   - Vercel will auto-detect Vite framework
+#### 2. Deploy Main Application
 
-3. **Configure Environment Variables**:
-   - In the "Environment Variables" section:
-     - Key: `VITE_CANDIDATE_NAME`
-     - Value: Your full name
-   - Click "Add"
+```bash
+npm run deploy
+# or
+vercel --prod --yes
+```
 
-4. **Deploy**:
-   - Click "Deploy"
-   - Wait ~1-2 minutes for build to complete
-   - Your app will be live at `https://your-project.vercel.app`
+#### 3. Deploy Storybook (Optional)
 
-### Option 2: Via Vercel CLI
+```bash
+npm run build-storybook
+cd storybook-static
+vercel --prod --yes
+cd ..
+```
 
-1. **Install Vercel CLI**:
+#### Quick Deploy (All Steps)
 
-   ```bash
-   npm install -g vercel
-   ```
+```bash
+git push origin master && vercel --prod --yes
+```
 
-2. **Login**:
+### Deployment Commands
 
-   ```bash
-   vercel login
-   ```
+| Command                   | Description                      |
+| ------------------------- | -------------------------------- |
+| `npm run deploy`          | Deploy app to production         |
+| `npm run deploy:preview`  | Deploy to preview (staging)      |
+| `npm run build-storybook` | Build Storybook static files     |
+| `vercel --prod --yes`     | Deploy current directory to prod |
+| `vercel ls --prod`        | List production deployments      |
+| `vercel inspect <url>`    | View deployment details          |
 
-3. **Deploy**:
+### Environment Variables
 
-   ```bash
-   vercel
-   ```
+Set via Vercel CLI:
 
-4. **Set Environment Variables**:
+```bash
+vercel env add VITE_CANDIDATE_NAME
+# Enter your full name when prompted
+```
 
-   ```bash
-   vercel env add VITE_CANDIDATE_NAME
-   # Enter your full name when prompted
-   ```
+Or via Vercel dashboard:
 
-5. **Production Deploy**:
-   ```bash
-   vercel --prod
-   ```
+- Navigate to your project settings
+- Add `VITE_CANDIDATE_NAME` with your full name
+- Set for production, preview, and development environments
 
-### Automatic Deployments
+**Important**: Environment variables must be prefixed with `VITE_` to be exposed to the client.
 
-Once connected to GitHub:
+### Pre-Deployment Checklist
 
-- **Every push to `master`** → Production deployment
-- **Every push to other branches** → Preview deployment
-- **Pull requests** → Preview deployment with unique URL
+Before deploying:
+
+- [ ] All tests passing: `npm test -- --run`
+- [ ] **Build validation passing**: `npm run validate` ✨ **REQUIRED**
+  - Checks for React duplication
+  - Verifies critical dependencies in bundle
+  - Validates bundle structure
+- [ ] Linting clean: `npm run lint`
+- [ ] Commits pushed: `git push origin master`
+- [ ] Environment variables configured
+- [ ] Test production build locally: `npm run preview`
+
+After deploying:
+
+- [ ] Production URL accessible
+- [ ] No console errors (check browser DevTools)
+- [ ] Features working as expected
+- [ ] Theme toggle functional
+- [ ] i18n switching works
+
+### Troubleshooting
+
+**Build fails:**
+
+```bash
+# Check deployment logs
+vercel inspect <deployment-url> --logs
+
+# Test build locally
+npm run build
+
+# Verify environment variables
+vercel env ls
+```
+
+**Environment variables not working:**
+
+- Must be prefixed with `VITE_`
+- Must be set in Vercel dashboard or CLI
+- Redeploy after adding new variables: `npm run deploy`
+
+**Build validation fails:**
+
+1. Read error message carefully
+2. Apply suggested fix (usually in error output)
+3. Run `npm run validate` again
+4. If still failing after 2 retries, investigate deeper
+
+**Deployment timeout:**
+
+- Typical build time: 3-5 seconds
+- Check for large dependencies or infinite loops
+- Verify all dependencies are in `package.json`
+
+**404 errors on routes:**
+
+- Vercel auto-handles SPA routing for Vite
+- The `vercel.json` file is configured with proper rewrites
 
 ### Build Configuration
 
@@ -524,37 +578,8 @@ The `vercel.json` file configures:
 
 - Build command: `npm run build`
 - Output directory: `dist`
-- Framework: Vite
-- Environment variables
-
-### Deployment Checklist
-
-- [ ] Repository pushed to GitHub/GitLab/Bitbucket
-- [ ] Vercel project created and linked
-- [ ] `VITE_CANDIDATE_NAME` environment variable set
-- [ ] Build succeeds (check deployment logs)
-- [ ] App loads correctly at deployment URL
-- [ ] API calls work (check Network tab)
-- [ ] Theming works (toggle light/dark mode)
-
-### Troubleshooting
-
-**Build fails:**
-
-- Check deployment logs in Vercel dashboard
-- Verify all dependencies are in `package.json`
-- Run `npm run build` locally to test
-
-**Environment variables not working:**
-
-- Must be prefixed with `VITE_`
-- Must be set in Vercel dashboard
-- Redeploy after adding new variables
-
-**404 errors on routes:**
-
-- Vercel auto-handles SPA routing for Vite
-- If issues persist, add `vercel.json` with `rewrites` config
+- Framework: Vite (auto-detected)
+- SPA routing rewrites
 
 ## Resources
 

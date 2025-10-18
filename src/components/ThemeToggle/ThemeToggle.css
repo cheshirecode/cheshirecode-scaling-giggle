@@ -1,36 +1,132 @@
 .themeToggle {
-  display: flex;
-  gap: var(--spacing-xs);
-  padding: var(--spacing-2xs);
-  background: var(--color-surface-hover);
-  border-radius: var(--radius-md);
+  position: relative;
+  display: inline-block;
 }
 
-.themeButton {
-  background: none;
-  border: none;
-  font-size: var(--font-size-lg);
-  cursor: pointer;
-  padding: var(--spacing-xs);
-  border-radius: var(--radius-sm);
-  transition: all 0.2s;
+.themeToggleButton {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
+  gap: var(--spacing-2);
+  padding: var(--spacing-2) var(--spacing-3);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  transition: all 0.2s;
+  min-width: 140px;
 }
 
-.themeButton:hover {
-  background: var(--color-surface-active);
-  transform: scale(1.1);
+.themeToggleButton:hover {
+  background: var(--color-surface-hover);
+  border-color: var(--color-border-hover);
 }
 
-.themeButton:focus-visible {
+.themeToggleButton:focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 
-.themeButton.active {
-  background: var(--color-primary);
+.themeToggleIcon {
+  font-size: var(--font-size-lg);
+  display: flex;
+  align-items: center;
+}
+
+.themeToggleLabel {
+  flex: 1;
+  text-align: left;
+  font-weight: 500;
+}
+
+.themeToggleArrow {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.themeDropdown {
+  position: absolute;
+  top: calc(100% + var(--spacing-1));
+  right: 0;
+  min-width: 240px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  padding: var(--spacing-1);
+  z-index: 100;
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.themeOption {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  width: 100%;
+  padding: var(--spacing-3);
+  background: none;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s;
+  color: var(--color-text);
+}
+
+.themeOption:hover {
+  background: var(--color-surface-hover);
+}
+
+.themeOption:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: -2px;
+}
+
+.themeOption.active {
+  background: var(--color-surface-active);
+}
+
+.themeOptionIcon {
+  font-size: var(--font-size-xl);
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.themeOptionContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+  flex: 1;
+}
+
+.themeOptionLabel {
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.themeOptionDesc {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  line-height: 1.3;
+}
+
+.themeOptionCheck {
+  color: var(--color-primary);
+  font-weight: bold;
+  font-size: var(--font-size-lg);
+  flex-shrink: 0;
 }
