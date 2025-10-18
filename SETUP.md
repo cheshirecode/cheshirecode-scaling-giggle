@@ -13,7 +13,7 @@
 
 ### Storybook Documentation
 
-**Production URL**: https://storybook-static-lyart.vercel.app
+**Production URL**: https://cheshirecode-challenge-nesto-sb.vercel.app
 
 **Status**: ✅ Successfully deployed with routing fix
 **Build Time**: ~3 seconds
