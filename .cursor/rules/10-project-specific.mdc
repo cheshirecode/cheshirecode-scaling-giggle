@@ -1,0 +1,307 @@
+---
+description: Frontend Challenge - Project-specific tech stack and architectural decisions
+alwaysApply: false
+---
+# Project Rules
+
+> See [04-react-typescript.mdc](mdc:04-react-typescript.mdc) for general React/TypeScript patterns
+
+## Tech Stack (Non-Negotiable)
+
+| Category | Choice | Reason |
+|----------|--------|--------|
+| **Router** | `wouter` | NOT react-router-dom (8x smaller) |
+| **Data** | `SWR` | NOT React Query (simpler for CRUD) |
+| **State** | `jotai` | Minimal: toasts + theme only |
+| **i18n** | `react-i18next` | EN/FR support |
+| **Styles** | CSS Modules + tokens | NO Tailwind/Material-UI |
+| **Theme** | `light-dark()` + Jotai | Native CSS + localStorage |
+| **Testing** | vitest + happy-dom | NOT jsdom (3x faster) |
+| **Mocking** | MSW v2 | API mocking |
+| **Pre-commit** | lefthook | Auto-format + lint |
+
+## Folder Structure
+
+```
+src/
+  components/      # Shared UI only
+  features/        # Business logic + domain UI
+  utils/           # Pure functions
+  services/        # API, i18n (side effects)
+  hooks/           # React hooks
+  atoms/           # Jotai state (minimal!)
+  types/           # TypeScript definitions
+  styles/          # Global CSS (tokens, reset, base)
+```
+
+## Critical Decisions
+
+### 1. Routing: wouter
+
+```typescript
+// Navigation
+const [, setLocation] = useLocation();
+setLocation('/path');
+
+// Params
+const [match, params] = useRoute('/users/:id');
+if (match) console.log(params.id); // { id: "123" }
+
+// Links
+<Link href="/about">About</Link>
+```
+
+**Migration from react-router**: `<Link to>` → `<Link href>`, `useNavigate()` → `useLocation()[1]`, `useParams()` → `useRoute()[1]`
+
+### 2. Data Fetching: SWR
+
+```typescript
+// GET
+const { data, error, isLoading } = useSWR('/products', fetcher);
+
+// POST/PUT/DELETE
+const { trigger, isMutating } = useSWRMutation('/applications', postFetcher);
+await trigger({ productId: 123 });
+```
+
+### 3. State: Jotai (Minimal!)
+
+**ONLY USE FOR**: Toasts, Theme preference
+
+**DO NOT USE FOR**: Server data (use SWR), Forms (use useState)
+
+```typescript
+// atoms/toastsAtom.ts
+export const toastsAtom = atom<Toast[]>([]);
+
+// atoms/themeAtom.ts
+export const themeAtom = atomWithStorage<'light'|'dark'|'system'>('theme', 'system');
+```
+
+### 4. Forms: useForm Hook
+
+```typescript
+const { values, errors, touched, handleChange, handleBlur, handleSubmit } = useForm({
+  initialValues: { email: '', phone: '' },
+  validators: { email: validateEmail, phone: validatePhone },
+  onSubmit: async (vals) => await save(vals),
+});
+```
+
+**Validators**: `utils/validators.ts` → `validateEmail`, `validatePhone`, `validateName`, `validateRequired`, `composeValidators`
+
+### 5. Environment Variables
+
+```bash
+VITE_CANDIDATE_NAME=Your Name  # REQUIRED (no fallback)
+```
+
+Set in Vercel: `vercel env add VITE_CANDIDATE_NAME`
+
+## API Integration
+
+```typescript
+// Base URL
+const API_URL = 'https://nesto-fe-exam.vercel.app/api';
+
+// Required Headers
+{
+  'X-Nesto-Candidat': import.meta.env.VITE_CANDIDATE_NAME,
+  'Accept': 'application/json',
+  'Content-Type': 'application/json',
+}
+```
+
+## Common Patterns
+
+### Toast Notifications
+```typescript
+const { addToast } = useToast();
+addToast({ type: 'success', message: 'Saved!' });
+```
+
+### Error Handling
+```typescript
+try {
+  await save(data);
+  addToast({ type: 'success', message: 'Saved!' });
+} catch (error) {
+  if (isApiError(error)) {
+    addToast({ type: 'error', message: error.statusText });
+  }
+}
+```
+
+## Constraints
+
+### ❌ NEVER
+- `any` type, `React.FC`, inline styles
+- Tailwind, Material-UI, Chakra, Ant Design
+- react-router-dom (use wouter)
+- React Query (use SWR)
+- Redux/MobX (use Jotai minimal)
+- jsdom as default (use happy-dom)
+
+### ✅ ALWAYS
+- Explicit types, CSS Modules, design tokens
+- Error boundaries, loading states
+- ARIA labels, semantic HTML
+- Atomic commits, JSDoc for public APIs
+
+## Environment Variables
+
+### Required Variables
+```bash
+# .env.example
+VITE_CANDIDATE_NAME=Your Full Name
+```
+
+```typescript
+// Usage
+const candidateName = import.meta.env.VITE_CANDIDATE_NAME;
+if (!candidateName) {
+  throw new Error('VITE_CANDIDATE_NAME is required');
+}
+```
+
+**Never use fallbacks for required variables** - fail early
+
+## Deployment
+
+**Platform**: Vercel (auto-deploy on push to master)
+
+**URLs**:
+- Main: https://cheshirecode-challenge-nesto-frontend-app-dac4158s-projects.vercel.app
+- Storybook: https://cheshirecode-challenge-nesto-frontend-sb-dac4158s-projects.vercel.app
+
+**Build**: `./scripts/build.sh` (runs type-check → test → build)
+
+## Deployment Workflow
+
+### Pre-Deployment Validation (MANDATORY)
+
+**ALWAYS run validation before deploying:**
+
+```bash
+npm run validate
+```
+
+This checks for:
+- ✅ Single React bundle (no duplicate instances)
+- ✅ Required dependencies (jotai, swr, wouter) in bundle
+- ✅ Bundle size and structure
+
+**If validation fails:**
+1. Analyze the error message
+2. Apply fix (check dependencies, vite config, etc.)
+3. Run validation again
+4. **Retry up to 2 times**
+5. If still failing after 2 fixes, STOP and report issue
+
+**Common Fixes:**
+- Multiple React bundles → Check `vite.config.ts` has `resolve.dedupe: ['react', 'react-dom']`
+- Missing jotai → Verify `jotai` in `dependencies` (not devDependencies)
+- Missing swr → Verify `swr` in `dependencies`
+
+### Deploy Both App and Storybook (REQUIRED)
+
+After validation passes, deploy:
+
+1. **Validate build** (`npm run validate`)
+2. **Commit incrementally** (small, atomic commits)
+3. **Push to master**
+4. **Deploy app**
+5. **Deploy Storybook**
+
+```bash
+# Full deployment sequence (run after each feature)
+npm run validate  # ← REQUIRED FIRST
+
+git add .
+git commit -m "feat: descriptive message"
+git push origin master
+
+# Deploy main app
+vercel --prod --yes
+
+# Deploy Storybook
+npm run build-storybook && cd storybook-static && vercel --prod --yes && cd ..
+```
+
+**One-liner with validation:**
+```bash
+npm run validate && git push origin master && vercel --prod --yes && npm run build-storybook && cd storybook-static && vercel --prod --yes && cd ..
+```
+
+**Production URLs:**
+- **App**: https://cheshirecode-challenge-nesto-frontend-app-dac4158s-projects.vercel.app
+- **Storybook**: https://storybook-static-dl3p3vke0-dac4158s-projects.vercel.app
+
+**Why**: Validation catches bundling issues before they hit production. Both deployments keep documentation in sync with code.
+
+---
+
+## Wireframe Implementation
+
+### Design Source: `wireframes/`
+
+**Implement according to wireframes** (`Home.png`, `List.png`, `Form.png`):
+
+1. **Navigation** (all pages):
+   - Custom logo (left) - using SVG assets (logo-light.svg, logo-dark.svg)
+   - "Applications" link only (right)
+   - Keep theme toggle + language switcher (not in wireframes but required)
+
+2. **Home Page** (`Home.png`):
+   - Show ONLY best FIXED and best VARIABLE products (2 cards max)
+   - Simple centered card design
+   - Large rate display (e.g., "1.25%")
+   - Type badge ("Best fixed" / "Best variable")
+   - Product name
+   - Button: "Select this product"
+   - NO additional details (restrictions, term info, etc.)
+
+3. **Applications List** (`List.png`):
+   - Table layout: Name | Email | Phone | Product
+   - Edit button per row
+   - Clean, minimal design
+
+4. **Application Form** (`Form.png`):
+   - Side-by-side layout (responsive: stack on mobile)
+   - Left: Product summary card
+   - Right: Form (First name, Last name, Email, Phone)
+   - Button: "Save applicant info"
+
+**Responsive Design** (not shown in wireframes):
+- Mobile: Stack cards/forms vertically
+- Tablet: 2-column grid for products
+- Desktop: Side-by-side layouts as shown
+
+---
+
+## Documentation Workflow
+
+### Single Source of Truth: HANDOFF.md
+
+Use `.cursor/HANDOFF.md` as the ONLY living document for:
+- Current project status and metrics
+- What's completed and what's next
+- Implementation plans and priorities
+- Code quality analysis results
+- Known issues and blockers
+
+**NEVER create separate planning files** (IMPLEMENTATION_PLAN.md, PHASE*_NEXT_STEPS.md, etc.)
+
+**Instead**:
+- Update HANDOFF.md with new analysis/plans
+- Keep it concise (<300 lines)
+- Delete completed/obsolete sections regularly
+- Focus on "what to do next" not "what was done"
+
+This prevents document sprawl and ensures one clear reference point.
+
+## Important Files
+
+- `requirements.md` - Challenge requirements (git-ignored, DO NOT modify or copy contents)
+- `wireframes/` - Design reference (inspiration only)
+- `thunder-collection_*.json` - API tests

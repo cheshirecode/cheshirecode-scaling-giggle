@@ -85,15 +85,15 @@ Act as a skilled, proactive, and meticulous senior colleague. Take ownership of 
     Use `grep -r "package-name"` to find all occurrences before committing.
 
 22. **LLM Rules & Requirements Management**:
-    
+
     **Cursor Rules** (`.cursor/rules/*.mdc`): SHOULD be committed to version control. These are project configuration files that help AI assistants understand project conventions and should be shared across the team.
-    
+
     **Requirements Files** (`requirements.md`): MUST be git-ignored. This file contains challenge/assignment specifications that:
     - Should NOT be modified by AI or developers
     - Should NOT have its contents copied into committed code
     - Exists only as reference material for development
     - Is specific to code challenges and should remain private
-    
+
     **Internal AI Working Files** (`.cursor/` directory): Should remain gitignored:
     - Progress tracking (PROGRESS.md, status updates)
     - Planning documents (*.plan.md, execution plans)

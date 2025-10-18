@@ -4,16 +4,6 @@ __generated__
 web-build
 bare-apps
 
-# AI/LLM IDE Configuration (Cursor, Claude, Gemini, Copilot, etc.)
-# These directories contain personal AI assistant rules and should not be committed
-.cursor/
-.claude/
-.gemini/
-.copilot/
-.aider/
-.continue/
-.windsurf/
-
 # macOS
 .DS_Store
 
@@ -197,3 +187,4 @@ docs/execution-plan-staff-pe.md
 
 *storybook.log
 storybook-static
+requirements.md
